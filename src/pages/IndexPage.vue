@@ -1,5 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly">
+    {{ 'Hello' }}
     <example-component
       title="Example component"
       active
