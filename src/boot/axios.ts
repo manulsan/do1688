@@ -16,6 +16,14 @@ declare module 'vue' {
 // for each client)
 const api = axios.create({ baseURL: 'https://api.example.com' });
 
+const apiNaver = axios.create({
+  baseURL: '/api/naver',
+  headers: {
+    'Content-Type': 'application/json',
+    // 'X-Naver-Client-Id': 'q_4av_CgXqetHsoPVQq8',
+    // 'X-Naver-Client-Secret': '8IpmpZvDPN',
+  },
+});
 export default defineBoot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
@@ -28,4 +36,4 @@ export default defineBoot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-export { api };
+export { api, apiNaver };

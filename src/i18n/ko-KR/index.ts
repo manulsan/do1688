@@ -1,0 +1,27 @@
+// This is just an example,
+// so you can safely delete all default props below
+
+export default {
+  failed: 'Action failed',
+  success: 'Action was successful',
+  'product rank': '상품 순위',
+  setup: '설정',
+  twitter: '트위트',
+  facebook: '페이스북',
+  menus: '메뉴',
+  Menus: '메뉴',
+  Save: '저장',
+  'User Account': '사용자 계정',
+  'User Malls': '사용자 몰',
+  'Client ID': '클라이언트 아이디',
+  'Client Secret': '클라이언트 시크릿',
+  'Please enter your client ID': '클라이언트 아이디를 입력하세요',
+  'Please enter your client secret': '클라이언트 시크릿을 입력하세요',
+  'Mall Name': '몰 이름',
+  Description: '설명',
+  'Add Mall': '몰 추가',
+  'Please enter mall name': '몰 이름을 입력하세요',
+  'Please enter mall description': '몰 설명을 입력하세요',
+  Title: '제목',
+  'No.': '번호',
+};

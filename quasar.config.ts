@@ -99,6 +99,15 @@ export default defineConfig((ctx) => {
     devServer: {
       // https: true,
       open: true, // opens browser window automatically
+      allowedHosts: ['openapi.naver.com', 'atcloud365.com'],
+      proxy: {
+        '/api/naver': {
+          target: 'https://openapi.naver.com/v1',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api\/naver/, ''), // /api/naver → /v1
+        },
+        '/api': `${process.env.BASE_URL}/api`,
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
@@ -117,6 +126,7 @@ export default defineConfig((ctx) => {
 
       // Quasar plugins
       plugins: [],
+      iconSet: 'mdi-v6', // MDI 최신 버전
     },
 
     // animations: 'all', // --- includes all animations
