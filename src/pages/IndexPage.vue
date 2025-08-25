@@ -32,7 +32,7 @@ const router = useRouter();
 
 onMounted(async () => {
   try {
-    await router.push('/productRank');
+    await router.push('/ranking');
   } catch (error) {
     console.log(error);
   }

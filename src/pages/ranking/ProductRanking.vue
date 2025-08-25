@@ -34,7 +34,7 @@
                       @click.stop.prevent="deleterchKeyOption(searchKey)"
                       class="cursor-pointer"
                     >
-                      <q-tooltip>{{ $t('Clear') }}</q-tooltip>
+                      <q-tooltip>{{ $t('Delete') }}</q-tooltip>
                     </q-icon>
                   </template>
                 </q-select>
@@ -63,8 +63,14 @@
               </q-item-section>
 
               <q-item-section avatar>
-                <q-btn class="q-px-md" icon="search" @click="onSearch()">
-                  <q-tooltip>{{ $t('Search') }}</q-tooltip>
+                <q-btn
+                  class="q-px-md"
+                  icon="search"
+                  @click="onSearch()"
+                  :disable="!checkInputsValid()"
+                  size="md"
+                >
+                  <q-tooltip>{{ searchTooltip }}</q-tooltip>
                 </q-btn>
               </q-item-section>
             </q-item>
@@ -203,27 +209,43 @@ function rowClassFn(row: RankItem): string {
   return row.mallName === selectedMallName.value ? 'bg-teal-1 text-bold' : '';
 }
 
+const searchTooltip = computed(() => {
+  if (!searchKey.value) return t('Search Key Missed');
+  else if (!selectedMallName.value) return t('Mall Name Missed');
+  else if (!userAccountStore.id) return t('Client ID Missed');
+  else if (!userAccountStore.secret) return t('Client Secret Missed');
+  else return t('Search');
+});
+const checkInputsValid = () => {
+  if (!searchKey.value || !selectedMallName.value) return false;
+  if (userAccountStore.id.length <= 0 || userAccountStore.secret.length <= 0) return false;
+  return true;
+};
 const onSearch = async () => {
   try {
     loading.value = true;
-    const found = searchKeyOptions.value.find((item: string) => item === searchKey.value);
-    if (!found) {
+    const existingKey = searchKeyOptions.value.find((item: string) => item === searchKey.value);
+    if (!existingKey) {
       searchKeyOptions.value.push(searchKey.value);
       userAccountStore.setSearchKeyList(searchKeyOptions.value);
     }
-
     myRankingNo.value = -1;
     productItems.value = [];
     //'https://openapi.naver.com/v1/search/shop.json',
     //const response = await apiNaver.get('/search/shop.json', {
-    const response = await apiNaver.get('/naver-search', {
+    let newPath = '';
+    if (import.meta.env.DEV) newPath = '/search/shop.json';
+    else if (import.meta.env.PROD) newPath = '/naver-search';
+
+    //const response = await apiNaver.get('/naver-search', {
+    const response = await apiNaver.get(newPath, {
       params: {
         query: searchKey.value,
         display: 100,
         sort: 'sim',
         start: searchStartIndex.value.value, //1,101,,,
-        Client_Id: userAccountStore.id,
-        Client_Secret: userAccountStore.secret,
+        // Client_Id: userAccountStore.id,
+        // Client_Secret: userAccountStore.secret,
       },
       headers: {
         'X-Naver-Client-Id': userAccountStore.id,
@@ -242,12 +264,9 @@ const onSearch = async () => {
         };
       });
     }
-
     loading.value = false;
   } catch (error) {
-    console.error("alex's error", (error as Error).message);
-    console.error("alex's error", error);
-    console.error(JSON.stringify(error));
+    console.error(error);
   } finally {
     loading.value = false;
   }

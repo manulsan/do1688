@@ -66,6 +66,7 @@ export const useUserAccountStore = defineStore('user-account', {
       const client = localStorage.getItem('client');
       if (client) {
         this.client = JSON.parse(client);
+        //this.client.id = ''; // q_4av_CgXqetHsoPVQq8
       } else {
         this.client = {
           id: '',

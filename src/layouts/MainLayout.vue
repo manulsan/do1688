@@ -4,15 +4,18 @@
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title> Ranking One </q-toolbar-title>
+        <!-- <q-toolbar-title> Ranking One </q-toolbar-title> -->
+        <q-toolbar-title @click="$router.push('/')" style="cursor: pointer">
+          Ranking One
+        </q-toolbar-title>
 
         <div>User Name{{ ': ' + userName }}</div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered :width="200">
       <q-list>
-        <q-item-label header>{{ $t('Menus') }} </q-item-label>
+        <!-- <q-item-label header>{{ $t('Menus') }} </q-item-label> -->
 
         <template v-for="(menu, index) in menuItems" :key="index">
           <EssentialLink v-if="!menu.seperator" v-bind="menu" />
@@ -48,39 +51,39 @@ const menuItems: EssentialLinkProps[] = [
     title: 'product rank',
     caption: 'product ranking check',
     icon: 'favorite',
-    // link: 'https://awesome.quasar.dev',
-    to: '/productRank',
+    to: '/ranking',
     seperator: false,
   },
-
   {
     title: 'setup',
     caption: 'setup user account',
     icon: 'settings',
-    // link: '/user/UserTabs',
-    to: '/userTabs',
+    to: '/user',
     seperator: false,
   },
-  {
-    title: 'Contact',
-    seperator: true, // <--- add this line
-  },
-  {
-    title: 'twitter',
-    caption: '@RankingOne',
-    icon: 'rss_feed',
-    // link: 'https://twitter.quasar.dev',
-    link: 'https://twitter.rankingone.com',
-    seperator: false,
-  },
-  {
-    title: 'facebook',
-    caption: '@RankingOne',
-    icon: 'public',
-    //link: 'https://facebook.quasar.dev',
-    link: 'https://www.facebook.com/rankingone',
-    seperator: false,
-  },
+  // {
+  //   title: 'Contact',
+  //   seperator: false, // <--- add this line
+  //   caption: 'setup user account',
+  //   icon: 'settings',
+  //   to: '/user',
+  // },
+  // {
+  //   title: 'twitter',
+  //   caption: '@RankingOne',
+  //   icon: 'rss_feed',
+  //   // link: 'https://twitter.quasar.dev',
+  //   link: 'https://twitter.rankingone.com',
+  //   seperator: false,
+  // },
+  // {
+  //   title: 'facebook',
+  //   caption: '@RankingOne',
+  //   icon: 'public',
+  //   //link: 'https://facebook.quasar.dev',
+  //   link: 'https://www.facebook.com/rankingone',
+  //   seperator: false,
+  // },
   // {
   //   title: 'Docs',
   //   caption: 'quasar.dev',
