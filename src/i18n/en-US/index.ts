@@ -35,4 +35,5 @@ export default {
   'Mall Name Missed': 'Setup Malls, Menu->Setup->Malls',
   'Client ID Missed': 'Setup Client ID, Menu->Setup->User Account',
   'Client Secret Missed': 'Setup Client Secret, Menu->Setup->User Account',
+  'if edited, hit enter key': 'if edited, hit enter key',
 };

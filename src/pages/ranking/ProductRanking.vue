@@ -31,6 +31,7 @@
                       <q-tooltip>{{ $t('Delete') }}</q-tooltip>
                     </q-icon>
                   </template>
+                  <q-tooltip>{{ $t('if edited, hit enter key') }}</q-tooltip>
                 </q-select>
               </q-item-section>
 
