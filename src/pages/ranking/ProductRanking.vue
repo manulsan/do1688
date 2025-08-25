@@ -7,12 +7,6 @@
           <q-toolbar-title class="q-px-md" dense>
             <q-item>
               <q-item-section avatar>
-                <q-item-label class="q-pr-md text-bold text-body1" side
-                  >{{ $t('Ranking') }} : {{ myRankingNo === -1 ? '' : myRankingNo }}
-                </q-item-label>
-              </q-item-section>
-
-              <q-item-section avatar>
                 <q-select
                   v-model="searchKey"
                   :options="searchKeyOptions"
@@ -57,7 +51,7 @@
                   :options="searchPointOptions"
                   dense
                   class="q-pl-md"
-                  style="width: 150px"
+                  style="width: 100px"
                   :label="$t('Start Point')"
                 />
               </q-item-section>
@@ -72,6 +66,12 @@
                 >
                   <q-tooltip>{{ searchTooltip }}</q-tooltip>
                 </q-btn>
+              </q-item-section>
+
+              <q-item-section avatar class="q-pl-md">
+                <q-item-label class="text-bold text-body1" side
+                  >{{ $t('Ranking') }} : {{ myRankingNo === -1 ? '' : myRankingNo }}
+                </q-item-label>
               </q-item-section>
             </q-item>
           </q-toolbar-title>
@@ -244,8 +244,8 @@ const onSearch = async () => {
         display: 100,
         sort: 'sim',
         start: searchStartIndex.value.value, //1,101,,,
-        // Client_Id: userAccountStore.id,
-        // Client_Secret: userAccountStore.secret,
+        Client_Id: userAccountStore.id,
+        Client_Secret: userAccountStore.secret,
       },
       headers: {
         'X-Naver-Client-Id': userAccountStore.id,
