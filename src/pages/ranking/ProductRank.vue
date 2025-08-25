@@ -215,12 +215,15 @@ const onSearch = async () => {
     myRankingNo.value = -1;
     productItems.value = [];
     //'https://openapi.naver.com/v1/search/shop.json',
-    const response = await apiNaver.get('/search/shop.json', {
+    //const response = await apiNaver.get('/search/shop.json', {
+    const response = await apiNaver.get('/naver-search', {
       params: {
         query: searchKey.value,
-        start: searchStartIndex.value.value, //1,101,,,
         display: 100,
         sort: 'sim',
+        start: searchStartIndex.value.value, //1,101,,,
+        Client_Id: userAccountStore.id,
+        Client_Secret: userAccountStore.secret,
       },
       headers: {
         'X-Naver-Client-Id': userAccountStore.id,
