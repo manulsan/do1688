@@ -227,8 +227,8 @@ const onSearch = async () => {
         'X-Naver-Client-Secret': userAccountStore.secret,
       },
     });
-    console.log(response.data);
 
+    console.log(' response.data=', response.data);
     if ('items' in response.data) {
       productItems.value = response.data.items.map((d: RankItem, index: number) => {
         if (d.mallName === selectedMallName.value)
