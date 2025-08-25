@@ -16,8 +16,20 @@ declare module 'vue' {
 // for each client)
 const api = axios.create({ baseURL: 'https://api.example.com' });
 
+let baseURL;
+if (import.meta.env.DEV) {
+  baseURL = '/api/naver';
+  console.log('Running in DEV mode');
+} else if (import.meta.env.PROD) {
+  baseURL = process.env.BASE_URL;
+  //baseURL = '/api/naver';
+  console.log('Running in PRODUCTION mode');
+}
+
+console.log('process.env.BASE_URL', process.env.BASE_URL);
 const apiNaver = axios.create({
-  baseURL: '/api/naver',
+  //baseURL: '/api/naver',
+  baseURL: baseURL as string,
   headers: {
     'Content-Type': 'application/json',
     // 'X-Naver-Client-Id': 'q_4av_CgXqetHsoPVQq8',

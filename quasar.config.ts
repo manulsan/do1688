@@ -4,6 +4,8 @@
 import { defineConfig } from '#q-app/wrappers';
 import { fileURLToPath } from 'node:url';
 // hello
+// require('dotenv').config();
+//console.log('process.env.BASE_URL=', process.env.BASE_URL);
 export default defineConfig((ctx) => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
@@ -62,6 +64,12 @@ export default defineConfig((ctx) => {
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
+
+      env: {
+        BASE_URL: process.env.BASE_URL,
+        // DEMO_ACCOUNT: process.env.DEMO_ACCOUNT,
+        DEV: ctx.dev ? 'true' : '',
+      },
 
       vitePlugins: [
         [
