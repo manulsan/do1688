@@ -17,16 +17,17 @@ declare module 'vue' {
 const api = axios.create({ baseURL: 'https://api.example.com' });
 
 let baseURL;
-if (import.meta.env.DEV) {
-  baseURL = '/api/naver';
-  console.log('Running in DEV mode');
-} else if (import.meta.env.PROD) {
-  baseURL = 'https://openapi.naver.com/v1/search/shop.json';
-  console.log('Running in PRODUCTION mode');
-}
+if (import.meta.env.DEV) baseURL = '/api/naver';
+else if (import.meta.env.PROD) baseURL = 'https://openapi.naver.com/v1/search/shop.json';
 
 console.log('process.env.BASE_URL', process.env.BASE_URL);
 console.log('import.meta.env', import.meta.env);
+
+// BASE_URL: "/"
+// DEV: false
+// MODE: "production"
+// PROD: true
+// SSR: false
 
 const apiNaver = axios.create({
   //baseURL: '/api/naver',

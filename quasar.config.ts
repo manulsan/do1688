@@ -64,6 +64,9 @@ export default defineConfig((ctx) => {
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
+      vite: {
+        base: '/myapp/', // <--- sets import.meta.env.BASE_URL
+      },
 
       env: {
         BASE_URL: process.env.BASE_URL,
