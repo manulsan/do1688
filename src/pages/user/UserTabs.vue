@@ -86,7 +86,7 @@
             :label="$t('Mall Name')"
             dense
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please enter mall name']"
+            :rules="[(val) => (val && val.length > 0) || $t('Please enter mall name')]"
             style="width: 300px"
           />
           <q-input
@@ -95,7 +95,7 @@
             :label="$t('Description')"
             style="width: 300px"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Please enter mall description']"
+            :rules="[(val) => (val && val.length > 0) || $t('Please enter mall description')]"
           />
           <q-btn :label="$t('Add Mall')" type="submit" color="primary" :disable="!isValidVall()" />
         </q-form>
@@ -114,16 +114,9 @@ const mallName = ref('');
 const mallDescription = ref('');
 import draggable from 'vuedraggable';
 import type { SortableEvent } from 'sortablejs';
-
 import { useUserAccountStore } from 'src/stores/user-account';
 
 const userAccountStore = useUserAccountStore();
-// interface UserMall {
-//   name: number;
-//   description: string;
-// }
-//const mallList = ref<UserMall[]>([]);
-//const mallList = ref<UserMall[]>([]) as [] as { name: string; description: string }[],
 const mallList = ref([] as { name: string; description: string }[]);
 const onSaveAccount = () => {
   userAccountStore.setClientId(clientId.value);
@@ -132,7 +125,7 @@ const onSaveAccount = () => {
 
 const onRegisterMall = () => {
   // Handle malls logic here
-  userAccountStore.addUMallName(mallName.value, mallDescription.value);
+  userAccountStore.addMallName(mallName.value, mallDescription.value);
 };
 const deleteMallName = (name: string) => {
   console.log('deleteMallName name=', name);
@@ -148,10 +141,10 @@ const isValidVall = () => {
 };
 
 function onDragEnd(evt: SortableEvent) {
-  console.log('Drag ended!');
-  console.log('Old index:', evt.oldIndex);
-  console.log('New index:', evt.newIndex);
-  console.log('Updated order:', myMalls.value);
+  // console.log('Drag ended!');
+  // console.log('Old index:', evt.oldIndex);
+  // console.log('New index:', evt.newIndex);
+  // console.log('Updated order:', myMalls.value);
   if ((evt.oldIndex, evt.newIndex === undefined)) return;
   else userAccountStore.updateMallNameOrders(evt.oldIndex as number, evt.newIndex);
 }
@@ -161,7 +154,7 @@ onMounted(() => {
   clientId.value = userAccountStore.id;
   clientSecret.value = userAccountStore.secret;
 
-  mallName.value = '?';
+  mallName.value = '';
   mallDescription.value = '';
 
   mallList.value = userAccountStore.malls;

@@ -11,6 +11,7 @@ export default {
   menus: 'Menu',
   Menus: 'Menu',
   Save: 'Save',
+  'Search Keys': 'Search Keys',
   'User Account': 'User Account',
   'User Malls': 'Malls',
   'Client ID': 'Client ID',
@@ -24,4 +25,9 @@ export default {
   'Please enter mall description': 'Please enter mall description',
   Title: 'Title',
   'No.': 'No.',
+  Price: 'Price',
+  'Start Point': 'start point',
+  Clear: 'Clear',
+  Ranking: 'Ranking',
+  Language: 'Language',
 };

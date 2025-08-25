@@ -8,14 +8,16 @@ export const useUserAccountStore = defineStore('user-account', {
       //malls: [] as string[],
       malls: [] as { name: string; description: string }[],
     },
-    // clientId: '',
-    // clientSecret: '',
-    // clientMalls: [] as string[], // i.e. ['mall1', 'mall2']
+    options: {
+      searchKeyList: [] as string[],
+    },
+    // clientId: '',    // clientSecret: '',    // clientMalls: [] as string[], // i.e. ['mall1', 'mall2']
   }),
   getters: {
     id: (state) => state.client.id,
     secret: (state) => state.client.secret,
     malls: (state) => state.client.malls,
+    searchKeyList: (state) => state.options.searchKeyList,
   },
   actions: {
     setClientId(id: string) {
@@ -27,7 +29,7 @@ export const useUserAccountStore = defineStore('user-account', {
       this.save();
     },
 
-    addUMallName(name: string, description: string) {
+    addMallName(name: string, description: string) {
       this.client.malls.push({
         name: name,
         description: description,
@@ -35,7 +37,6 @@ export const useUserAccountStore = defineStore('user-account', {
       this.save();
     },
 
-    //updateMallNameOrders(malls: { name: string; description: string }[])
     updateMallNameOrders(from: number, to: number) {
       const malls = this.client.malls;
 
@@ -48,9 +49,14 @@ export const useUserAccountStore = defineStore('user-account', {
       this.client.malls = this.client.malls.filter((mall) => mall.name !== name);
       this.save();
     },
+    setSearchKeyList(searchKeyList: string[]) {
+      this.options.searchKeyList = searchKeyList;
+      this.save();
+    },
     save() {
       try {
         localStorage.setItem('client', JSON.stringify(this.client));
+        localStorage.setItem('options', JSON.stringify(this.options));
       } catch (error) {
         console.error(error);
       }
@@ -67,6 +73,11 @@ export const useUserAccountStore = defineStore('user-account', {
           secret: '',
           malls: [],
         };
+      }
+
+      const options = localStorage.getItem('options');
+      if (options) {
+        this.options = JSON.parse(options);
       }
     },
   },

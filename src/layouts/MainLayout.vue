@@ -35,11 +35,13 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeMount } from 'vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
+import { useI18n } from 'vue-i18n';
 import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
 import { useUserAccountStore } from 'src/stores/user-account';
 const leftDrawerOpen = ref(false);
 const userName = ref('none');
 const userAccountStore = useUserAccountStore();
+const { locale } = useI18n({ useScope: 'global' });
 
 const menuItems: EssentialLinkProps[] = [
   {
@@ -111,6 +113,9 @@ function toggleLeftDrawer() {
 
 onMounted(() => {
   //userAccountStore.load();
+  const language = localStorage.getItem('userLanguage');
+  console.log('language=', language);
+  locale.value = language ?? 'en-US';
 });
 
 onBeforeMount(() => {

@@ -1,6 +1,5 @@
 // This is just an example,
 // so you can safely delete all default props below
-
 export default {
   failed: 'Action failed',
   success: 'Action was successful',
@@ -11,6 +10,7 @@ export default {
   menus: '메뉴',
   Menus: '메뉴',
   Save: '저장',
+  'Search Keys': '검색어',
   'User Account': '사용자 계정',
   'User Malls': '사용자 몰',
   'Client ID': '클라이언트 아이디',
@@ -24,4 +24,9 @@ export default {
   'Please enter mall description': '몰 설명을 입력하세요',
   Title: '제목',
   'No.': '번호',
+  Price: '가격',
+  'Start Point': '시작점',
+  Clear: '지우기',
+  Ranking: '랭킹',
+  Language: '언어',
 };
