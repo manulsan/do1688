@@ -205,6 +205,8 @@ function rowClassFn(row: RankItem): string {
 
 const onSearch = async () => {
   try {
+    console.log(' onSearch 1');
+
     loading.value = true;
     const found = searchKeyOptions.value.find((item: string) => item === searchKey.value);
     if (!found) {
@@ -212,8 +214,12 @@ const onSearch = async () => {
       userAccountStore.setSearchKeyList(searchKeyOptions.value);
     }
 
+    console.log(' onSearch 2');
+
     myRankingNo.value = -1;
     productItems.value = [];
+    console.log(' onSearch 3');
+
     //'https://openapi.naver.com/v1/search/shop.json',
     const response = await apiNaver.get('/search/shop.json', {
       params: {
@@ -227,6 +233,7 @@ const onSearch = async () => {
         'X-Naver-Client-Secret': userAccountStore.secret,
       },
     });
+    console.log(' onSearch 4');
 
     console.log(' response.data=', response.data);
     if ('items' in response.data) {
