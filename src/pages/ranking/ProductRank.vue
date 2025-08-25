@@ -242,6 +242,8 @@ const onSearch = async () => {
 
     loading.value = false;
   } catch (error) {
+    console.error("alex's error", (error as Error).message);
+    console.error("alex's error", error);
     console.error(JSON.stringify(error));
   } finally {
     loading.value = false;
