@@ -114,7 +114,6 @@ function toggleLeftDrawer() {
 onMounted(() => {
   //userAccountStore.load();
   const language = localStorage.getItem('userLanguage');
-  console.log('language=', language);
   locale.value = language ?? 'en-US';
 });
 

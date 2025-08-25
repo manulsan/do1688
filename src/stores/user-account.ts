@@ -64,7 +64,6 @@ export const useUserAccountStore = defineStore('user-account', {
 
     load() {
       const client = localStorage.getItem('client');
-      console.log('load client', client);
       if (client) {
         this.client = JSON.parse(client);
       } else {
