@@ -32,8 +32,8 @@ console.log('axios.defaults.baseURL API call to:', axios.defaults.baseURL);
 // SSR: false
 
 const apiNaver = axios.create({
-  //baseURL: '/api/naver',
-  baseURL: baseURL as string,
+  baseURL: '/api/naver',
+  //baseURL: baseURL as string,
   headers: {
     'Content-Type': 'application/json', // 'X-Naver-Client-Id': 'q_4av_CgXqetHsoPVQq8',    // 'X-Naver-Client-Secret': '8IpmpZvDPN',
   },
