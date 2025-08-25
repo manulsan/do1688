@@ -21,8 +21,7 @@ if (import.meta.env.DEV) {
   baseURL = '/api/naver';
   console.log('Running in DEV mode');
 } else if (import.meta.env.PROD) {
-  baseURL = process.env.BASE_URL;
-  //baseURL = '/api/naver';
+  baseURL = 'https://openapi.naver.com/v1/search/shop.json';
   console.log('Running in PRODUCTION mode');
 }
 
