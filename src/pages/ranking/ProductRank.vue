@@ -205,7 +205,7 @@ function rowClassFn(row: RankItem): string {
 
 const onSearch = async () => {
   try {
-    console.log(' onSearch 1');
+    console.log(' onSearch xxxxx1');
 
     loading.value = true;
     const found = searchKeyOptions.value.find((item: string) => item === searchKey.value);

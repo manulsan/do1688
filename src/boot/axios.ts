@@ -27,6 +27,8 @@ if (import.meta.env.DEV) {
 }
 
 console.log('process.env.BASE_URL', process.env.BASE_URL);
+console.log('import.meta.env', import.meta.env);
+
 const apiNaver = axios.create({
   //baseURL: '/api/naver',
   baseURL: baseURL as string,
