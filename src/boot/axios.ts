@@ -21,7 +21,7 @@ if (import.meta.env.DEV) baseURL = '/api/naver';
 //else if (import.meta.env.PROD) baseURL = 'https://openapi.naver.com/v1';
 else if (import.meta.env.PROD) {
   //do1688.vercel.app/api/naver-search?query=TV&Client_Id=q_4av_CgXqetHsoPVQq8&Client_Secret=8IpmpZvDPN
-  baseURL = 'do1688.vercel.app/api';
+  baseURL = 'https://do1688.vercel.app/api';
 }
 
 console.log('baseURL', baseURL);
