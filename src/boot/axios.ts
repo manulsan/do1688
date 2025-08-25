@@ -18,7 +18,8 @@ const api = axios.create({ baseURL: 'https://api.example.com' });
 
 let baseURL;
 if (import.meta.env.DEV) baseURL = '/api/naver';
-else if (import.meta.env.PROD) baseURL = 'https://openapi.naver.com/v1/search/shop.json';
+//else if (import.meta.env.PROD) baseURL = 'https://openapi.naver.com/v1/search/shop.json';
+else if (import.meta.env.PROD) baseURL = 'https://openapi.naver.com/v1';
 
 console.log('process.env.BASE_URL', process.env.BASE_URL);
 console.log('import.meta.env', import.meta.env);
