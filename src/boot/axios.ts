@@ -22,6 +22,7 @@ else if (import.meta.env.PROD) baseURL = 'https://openapi.naver.com/v1/search/sh
 
 console.log('process.env.BASE_URL', process.env.BASE_URL);
 console.log('import.meta.env', import.meta.env);
+console.log('baseURL', baseURL);
 
 // BASE_URL: "/"
 // DEV: false
