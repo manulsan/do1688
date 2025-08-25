@@ -24,7 +24,7 @@ else if (import.meta.env.PROD) baseURL = 'https://openapi.naver.com/v1';
 console.log('process.env.BASE_URL', process.env.BASE_URL);
 console.log('import.meta.env', import.meta.env);
 console.log('baseURL', baseURL);
-
+console.log('axios.defaults.baseURL API call to:', axios.defaults.baseURL);
 // BASE_URL: "/"
 // DEV: false
 // MODE: "production"
@@ -35,9 +35,7 @@ const apiNaver = axios.create({
   //baseURL: '/api/naver',
   baseURL: baseURL as string,
   headers: {
-    'Content-Type': 'application/json',
-    // 'X-Naver-Client-Id': 'q_4av_CgXqetHsoPVQq8',
-    // 'X-Naver-Client-Secret': '8IpmpZvDPN',
+    'Content-Type': 'application/json', // 'X-Naver-Client-Id': 'q_4av_CgXqetHsoPVQq8',    // 'X-Naver-Client-Secret': '8IpmpZvDPN',
   },
 });
 export default defineBoot(({ app }) => {
