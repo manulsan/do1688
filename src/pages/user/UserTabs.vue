@@ -14,7 +14,39 @@
             :label="$t('Client ID')"
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('Please enter your client ID')]"
-          />
+          >
+            <template v-slot:append>
+              <q-btn
+                :label="$t('Hint')"
+                icon="help"
+                color="primary"
+                class="q-mt-md"
+                style="cursor: pointer"
+                @click="showClientIdHint = !showClientIdHint"
+              >
+                <q-tooltip>{{ $t('Hint for Client ID') }}</q-tooltip>
+              </q-btn>
+            </template>
+          </q-input>
+
+          <div
+            v-if="showClientIdHint"
+            class="q-mt-none q-mb-md q-pl-lg"
+            style="background-color: #22f2f2; border-radius: 5px; padding: 10px"
+          >
+            <q-item-label class="text-bold text-body1">
+              <q-span>
+                {{ $t('If you need clientId hint, click below link') }}
+              </q-span>
+            </q-item-label>
+
+            <q-item-label class="q-mt-md">
+              <a :href="naverIdHit1" target="_blank"> {{ $t('DAOL Help Center') }} </a>
+            </q-item-label>
+            <q-item-label class="q-mt-md">
+              <a :href="naverIdHit2" target="_blank"> {{ $t('CAFE24 Help Center') }} </a>
+            </q-item-label>
+          </div>
           <!-- type="password" -->
           <q-input
             v-model="clientSecret"
@@ -87,7 +119,8 @@
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('Please enter mall name')]"
             style="width: 300px"
-          />
+          >
+          </q-input>
           <q-input
             v-model="mallDescription"
             dense
@@ -115,6 +148,13 @@
 import { computed, onMounted, ref } from 'vue';
 
 const tab = ref('user_account');
+const showClientIdHint = ref(false);
+const naverIdHit1 = ref(
+  'https://daolcom.com/board/manual/read.html?no=9251&board_no=101&category_no=5&cate_no=5&category_no=5',
+);
+const naverIdHit2 = ref(
+  'https://support.cafe24.com/hc/ko/articles/8467208476569--%EB%8F%99%EC%98%81%EC%83%81%EA%B0%80%EC%9D%B4%EB%93%9C-%EB%84%A4%EC%9D%B4%EB%B2%84-%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8-%EC%95%B1-%EC%95%84%EC%9D%B4%EB%94%94%EB%A5%BC-%EB%B0%9C%EA%B8%89%EB%B0%9B%EC%9C%BC%EB%A0%A4%EB%A9%B4-%EC%96%B4%EB%96%BB%EA%B2%8C-%ED%95%B4%EC%95%BC-%ED%95%98%EB%82%98%EC%9A%94',
+);
 const clientId = ref('');
 const clientSecret = ref('');
 

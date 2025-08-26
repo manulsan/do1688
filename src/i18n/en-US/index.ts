@@ -37,4 +37,9 @@ export default {
   'Client ID Missed': 'Setup Client ID, Menu->Setup->User Account',
   'Client Secret Missed': 'Setup Client Secret, Menu->Setup->User Account',
   'if edited, hit enter key': 'if edited, hit enter key to save',
+  Hint: 'Hint',
+  'Hint for Client ID': 'Hint for Client ID',
+  'If you need clientId hint, click below link': 'If you need clientId hint, click below link',
+  'DAOL Help Center': 'DAOL Help Center',
+  'CAFE24 Help Center': 'CAFE24 Help Center',
 };

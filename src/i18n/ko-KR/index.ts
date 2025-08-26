@@ -40,4 +40,10 @@ export default {
   Email: '이메일',
   'Please enter your name': '이름을 입력해주세요',
   'Please enter your email': '이메일을 입력해주세요',
+  Hint: '힌트',
+  'Hint for Client ID': '클라이언트 아이디 생성을 위한 힌트',
+  'If you need clientId hint, click below link':
+    '클라이언트 아이디 생성을 위한 힌트는 아래 링크를 클릭해주세요',
+  'DAOL Help Center': 'DAOL 고객 센터',
+  'CAFE24 Help Center': 'CAFE24 고객 센터',
 };
