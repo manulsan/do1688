@@ -2,6 +2,7 @@
 // so you can safely delete all default props below
 
 export default {
+  'Rank One': 'Rank One',
   failed: 'Action failed',
   success: 'Action was successful',
   'product rank': 'Product Rank',

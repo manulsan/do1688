@@ -22,13 +22,28 @@
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('Please enter your client secret')]"
           />
+          <q-separator class="q-my-md" />
+          <q-input
+            v-model="userName"
+            :label="$t('Name')"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || $t('Please enter your name')]"
+          />
+
+          <q-input
+            v-model="userEmail"
+            :label="$t('Email')"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || $t('Please enter your email')]"
+          />
+
           <q-btn
             :label="$t('Save')"
             type="submit"
             color="primary"
             class="q-mt-md"
             icon="save"
-            :disable="!clientId || !clientSecret"
+            :disable="!clientId || !clientSecret || !userName || !userEmail"
           >
             <q-tooltip>{{ $t('Save') }}</q-tooltip>
           </q-btn>
@@ -86,7 +101,7 @@
             icon="add"
             color="primary"
             class="q-mt-md"
-            :disable="!isValidVall()"
+            :disable="!isMallInputsValid()"
           >
             <q-tooltip>{{ $t(tooltipAddMall) }}</q-tooltip>
           </q-btn>
@@ -102,6 +117,10 @@ import { computed, onMounted, ref } from 'vue';
 const tab = ref('user_account');
 const clientId = ref('');
 const clientSecret = ref('');
+
+const userName = ref('');
+const userEmail = ref('');
+
 const mallName = ref('');
 const mallDescription = ref('');
 import draggable from 'vuedraggable';
@@ -116,13 +135,16 @@ const onRegisterMall = () => userAccountStore.addMallName(mallName.value, mallDe
 const onSaveAccount = () => {
   userAccountStore.setClientId(clientId.value);
   userAccountStore.setClientSecret(clientSecret.value);
+
+  userAccountStore.setUserName(userName.value);
+  userAccountStore.setUserEmail(userEmail.value);
 };
 const tooltipAddMall = computed(() => {
   if (!mallName.value) return 'Please enter mall name';
   else if (!mallDescription.value) return 'Please enter mall description';
   else return 'Add Mall';
 });
-const isValidVall = () => {
+const isMallInputsValid = () => {
   if (mallName.value.length > 0 && mallDescription.value.length > 0) {
     const dup = myMalls.value.find((mall) => mall.name === mallName.value);
     return dup === undefined;
@@ -131,10 +153,6 @@ const isValidVall = () => {
 };
 
 function onDragEnd(evt: SortableEvent) {
-  // console.log('Drag ended!');
-  // console.log('Old index:', evt.oldIndex);
-  // console.log('New index:', evt.newIndex);
-  // console.log('Updated order:', myMalls.value);
   if ((evt.oldIndex, evt.newIndex === undefined)) return;
   else userAccountStore.updateMallNameOrders(evt.oldIndex as number, evt.newIndex);
 }

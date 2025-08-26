@@ -8,6 +8,10 @@ export const useUserAccountStore = defineStore('user-account', {
       //malls: [] as string[],
       malls: [] as { name: string; description: string }[],
     },
+    user: {
+      name: '',
+      email: '',
+    },
     options: {
       searchKeyList: [] as string[],
     },
@@ -18,6 +22,9 @@ export const useUserAccountStore = defineStore('user-account', {
     secret: (state) => state.client.secret,
     malls: (state) => state.client.malls,
     searchKeyList: (state) => state.options.searchKeyList,
+
+    name: (state) => state.user.name,
+    email: (state) => state.user.email,
   },
   actions: {
     setClientId(id: string) {
@@ -26,6 +33,15 @@ export const useUserAccountStore = defineStore('user-account', {
     },
     setClientSecret(secret: string) {
       this.client.secret = secret;
+      this.save();
+    },
+
+    setUserName(name: string) {
+      this.user.name = name;
+      this.save();
+    },
+    setUserEmail(email: string) {
+      this.user.email = email;
       this.save();
     },
 
@@ -57,6 +73,7 @@ export const useUserAccountStore = defineStore('user-account', {
       try {
         localStorage.setItem('client', JSON.stringify(this.client));
         localStorage.setItem('options', JSON.stringify(this.options));
+        localStorage.setItem('user', JSON.stringify(this.user));
       } catch (error) {
         console.error(error);
       }
@@ -64,21 +81,13 @@ export const useUserAccountStore = defineStore('user-account', {
 
     load() {
       const client = localStorage.getItem('client');
-      if (client) {
-        this.client = JSON.parse(client);
-        //this.client.id = ''; // q_4av_CgXqetHsoPVQq8
-      } else {
-        this.client = {
-          id: '',
-          secret: '',
-          malls: [],
-        };
-      }
+      if (client) this.client = JSON.parse(client);
+
+      const user = localStorage.getItem('user');
+      if (user) this.user = JSON.parse(user);
 
       const options = localStorage.getItem('options');
-      if (options) {
-        this.options = JSON.parse(options);
-      }
+      if (options) this.options = JSON.parse(options);
     },
   },
 });

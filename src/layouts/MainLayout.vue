@@ -6,10 +6,14 @@
 
         <!-- <q-toolbar-title> Ranking One </q-toolbar-title> -->
         <q-toolbar-title @click="$router.push('/')" style="cursor: pointer">
-          Ranking One
+          {{ $t('Rank One') }}
+          <q-badge class="q-ml-none" color="teal" align="top">v1.0</q-badge>
         </q-toolbar-title>
 
-        <div>User Name{{ ': ' + userName }}</div>
+        <q-label class="q-ml-md" color="primary">
+          {{ userAccountStore.email }}
+          <q-badge class="q-ml-none" color="teal" align="top">{{ userAccountStore.name }}</q-badge>
+        </q-label>
       </q-toolbar>
     </q-header>
 
@@ -42,7 +46,7 @@ import { useI18n } from 'vue-i18n';
 import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
 import { useUserAccountStore } from 'src/stores/user-account';
 const leftDrawerOpen = ref(false);
-const userName = ref('none');
+// const userName = ref('none');
 const userAccountStore = useUserAccountStore();
 const { locale } = useI18n({ useScope: 'global' });
 
@@ -61,53 +65,6 @@ const menuItems: EssentialLinkProps[] = [
     to: '/user',
     seperator: false,
   },
-  // {
-  //   title: 'Contact',
-  //   seperator: false, // <--- add this line
-  //   caption: 'setup user account',
-  //   icon: 'settings',
-  //   to: '/user',
-  // },
-  // {
-  //   title: 'twitter',
-  //   caption: '@RankingOne',
-  //   icon: 'rss_feed',
-  //   // link: 'https://twitter.quasar.dev',
-  //   link: 'https://twitter.rankingone.com',
-  //   seperator: false,
-  // },
-  // {
-  //   title: 'facebook',
-  //   caption: '@RankingOne',
-  //   icon: 'public',
-  //   //link: 'https://facebook.quasar.dev',
-  //   link: 'https://www.facebook.com/rankingone',
-  //   seperator: false,
-  // },
-  // {
-  //   title: 'Docs',
-  //   caption: 'quasar.dev',
-  //   icon: 'school',
-  //   link: 'https://quasar.dev',
-  // },
-  // {
-  //   title: 'Github',
-  //   caption: 'github.com/quasarframework',
-  //   icon: 'code',
-  //   link: 'https://github.com/quasarframework',
-  // },
-  // {
-  //   title: 'Discord Chat Channel',
-  //   caption: 'chat.quasar.dev',
-  //   icon: 'chat',
-  //   link: 'https://chat.quasar.dev',
-  // },
-  // {
-  //   title: 'Forum',
-  //   caption: 'forum.quasar.dev',
-  //   icon: 'record_voice_over',
-  //   link: 'https://forum.quasar.dev',
-  // },
 ];
 
 function toggleLeftDrawer() {
