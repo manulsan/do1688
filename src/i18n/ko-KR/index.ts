@@ -34,5 +34,5 @@ export default {
   'Mall Name Missed': '몰 이름 설정 하세요, 메뉴->설정->사용자 몰',
   'Client ID Missed': '클라이언트 아이디 설정 하세요, 메뉴->설정->사용자 계정',
   'Client Secret Missed': '클라이언트 설정 하세요, 메뉴->설정->사용자 계정',
-  'if edited, hit enter key': '키를 편집 입력했으면, 엔터 키를 치세요',
+  'if edited, hit enter key': ' 입력루 엔터 키를 치세요. 그러면 자동 저장 됩니다.',
 };

@@ -17,20 +17,10 @@
                   fill-input
                   aria-placeholder="Search"
                   hide-selected
-                  input-debounce="0"
-                  new-value-mode="add-unique"
                   @new-value="addSearchKeyOption"
                   style="color: black; background-color: white; width: 400px"
+                  @blur="onBlur"
                 >
-                  <template v-if="searchKey.length" v-slot:append>
-                    <q-icon
-                      name="close"
-                      @click.stop.prevent="deleterchKeyOption(searchKey)"
-                      class="cursor-pointer"
-                    >
-                      <q-tooltip>{{ $t('Delete') }}</q-tooltip>
-                    </q-icon>
-                  </template>
                   <q-tooltip>{{ $t('if edited, hit enter key') }}</q-tooltip>
                 </q-select>
               </q-item-section>
@@ -64,6 +54,7 @@
                   @click="onSearch()"
                   :disable="!checkInputsValid()"
                   size="md"
+                  color="primary"
                 >
                   <q-tooltip>{{ searchTooltip }}</q-tooltip>
                 </q-btn>
@@ -197,15 +188,32 @@ const columns = computed(() => {
 });
 
 function addSearchKeyOption(val: string, done: (val: string) => void) {
-  const found = searchKeyOptions.value.find((item: string) => item === val);
-  if (!found) searchKeyOptions.value.push(val);
   done(val);
+  const found = searchKeyOptions.value.find((item: string) => item === val);
+  if (val.length > 0 && !found && searchKeyOptions.value.length >= 20) {
+    searchKeyOptions.value.pop(); // remvoe last, //searchKeyOptions.value.shift();// remvoe first
+
+    searchKeyOptions.value.unshift(val);
+    userAccountStore.setSearchKeyList(searchKeyOptions.value);
+  }
 }
-function deleterchKeyOption(val: string) {
-  searchKeyOptions.value = searchKeyOptions.value.filter((item: string) => item !== val);
-  userAccountStore.setSearchKeyList(searchKeyOptions.value);
-  searchKey.value = '';
-}
+const onBlur = () => {
+  console.log('onBlur', searchKey.value);
+  if (!searchKeyOptions.value.find((item: string) => item === searchKey.value)) {
+    searchKeyOptions.value.unshift(searchKey.value);
+    userAccountStore.setSearchKeyList(searchKeyOptions.value);
+  }
+};
+
+// const onFilterSearchKeyOption = (val, update) => {
+//   if (val.length > 0) update(val);
+//   else update('');
+// };
+// function deleterchKeyOption(val: string) {
+//   searchKeyOptions.value = searchKeyOptions.value.filter((item: string) => item !== val);
+//   userAccountStore.setSearchKeyList(searchKeyOptions.value);
+//   searchKey.value = '';
+// }
 function rowClassFn(row: RankItem): string {
   return row.mallName === selectedMallName.value ? 'bg-teal-1 text-bold' : '';
 }

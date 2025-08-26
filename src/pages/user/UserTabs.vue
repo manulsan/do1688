@@ -26,32 +26,16 @@
             :label="$t('Save')"
             type="submit"
             color="primary"
-            class="q-mt-"
+            class="q-mt-md"
+            icon="save"
             :disable="!clientId || !clientSecret"
-          />
+          >
+            <q-tooltip>{{ $t('Save') }}</q-tooltip>
+          </q-btn>
         </q-form>
       </q-tab-panel>
 
       <q-tab-panel name="malls">
-        <!-- <q-list padding class="q-mb-md" separator bordere style="min-height: 200px">
-          <q-item v-for="(mall, index) in myMalls" :key="index" clickable v-ripple>
-            <q-item-section avatar class="drag-handle">
-              <q-icon name="drag_indicator" />
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label>{{ mall.name }}</q-item-label>
-            </q-item-section>
-
-            <q-item-section>
-              <q-item-label caption>{{ mall.description }}</q-item-label>
-            </q-item-section>
-
-            <q-item-section avatar side>
-              <q-icon name="delete" @click="deleteMallName(mall.name)" />
-            </q-item-section>
-          </q-item>
-        </q-list> -->
         <draggable
           v-model="myMalls"
           item-key="name"
@@ -97,7 +81,15 @@
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('Please enter mall description')]"
           />
-          <q-btn :label="$t('Add Mall')" type="submit" color="primary" :disable="!isValidVall()" />
+          <q-btn
+            :label="$t('Add Mall')"
+            icon="add"
+            color="primary"
+            class="q-mt-md"
+            :disable="!isValidVall()"
+          >
+            <q-tooltip>{{ $t(tooltipAddMall) }}</q-tooltip>
+          </q-btn>
         </q-form>
       </q-tab-panel>
     </q-tab-panels>
@@ -118,20 +110,18 @@ import { useUserAccountStore } from 'src/stores/user-account';
 
 const userAccountStore = useUserAccountStore();
 const mallList = ref([] as { name: string; description: string }[]);
+
+const deleteMallName = (name: string) => userAccountStore.deleteMallName(name);
+const onRegisterMall = () => userAccountStore.addMallName(mallName.value, mallDescription.value);
 const onSaveAccount = () => {
   userAccountStore.setClientId(clientId.value);
   userAccountStore.setClientSecret(clientSecret.value);
 };
-
-const onRegisterMall = () => {
-  // Handle malls logic here
-  userAccountStore.addMallName(mallName.value, mallDescription.value);
-};
-const deleteMallName = (name: string) => {
-  console.log('deleteMallName name=', name);
-  userAccountStore.deleteMallName(name);
-};
-
+const tooltipAddMall = computed(() => {
+  if (!mallName.value) return 'Please enter mall name';
+  else if (!mallDescription.value) return 'Please enter mall description';
+  else return 'Add Mall';
+});
 const isValidVall = () => {
   if (mallName.value.length > 0 && mallDescription.value.length > 0) {
     const dup = myMalls.value.find((mall) => mall.name === mallName.value);
