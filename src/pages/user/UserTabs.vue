@@ -35,9 +35,9 @@
             style="background-color: #22f2f2; border-radius: 5px; padding: 10px"
           >
             <q-item-label class="text-bold text-body1">
-              <q-span>
+              <span>
                 {{ $t('If you need clientId hint, click below link') }}
-              </q-span>
+              </span>
             </q-item-label>
 
             <q-item-label class="q-mt-md">
@@ -110,6 +110,7 @@
           </template>
         </draggable>
 
+        <!------- **** mall tab **** ------->
         <q-form @submit="onRegisterMall" class="q-mx-lg" dense>
           <q-separator class="q-my-md" />
           <q-input
@@ -134,6 +135,7 @@
             icon="add"
             color="primary"
             class="q-mt-md"
+            type="submit"
             :disable="!isMallInputsValid()"
           >
             <q-tooltip>{{ $t(tooltipAddMall) }}</q-tooltip>
@@ -185,7 +187,8 @@ const tooltipAddMall = computed(() => {
   else return 'Add Mall';
 });
 const isMallInputsValid = () => {
-  if (mallName.value.length > 0 && mallDescription.value.length > 0) {
+  //if (mallName.value.length > 0 && mallDescription.value.length > 0)
+  if (mallName.value.length > 0) {
     const dup = myMalls.value.find((mall) => mall.name === mallName.value);
     return dup === undefined;
   }

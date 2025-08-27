@@ -7,7 +7,7 @@
         {{ '||||searchOptions=' + searchOptions }} -->
         <!-- :options="filteredOptions" -->
         <div class="row q-pa-sm">
-          <div class="col-4 q-pl-sm">
+          <div class="col-6 q-pl-sm">
             <q-select
               v-model="searchKey"
               filled
@@ -43,12 +43,12 @@
             />
           </div>
 
-          <div class="col-2 q-pt-sm">
+          <div class="col-1 q-pt-sm">
             <span class="text-bold text-body1 text-grey-9">
               {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
             </span>
           </div>
-          <div class="col-2 q-pl-sm">
+          <div class="col-1 q-pl-sm">
             <q-btn
               icon="search"
               @click="onSearch()"
@@ -56,7 +56,6 @@
               size="md"
               color="primary"
               class="q-ml-sm"
-              style="width: 5%"
             >
               <q-tooltip>{{ searchTooltip }}</q-tooltip>
             </q-btn>
