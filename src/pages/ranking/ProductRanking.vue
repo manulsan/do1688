@@ -1,91 +1,149 @@
 <template>
-  <q-page class="q-pa-none" style="user-select: none">
+  <q-page class="q-pa-none">
     <q-linear-progress v-if="loading" indeterminate />
     <q-scroll-area style="height: calc(100vh - 50px - 50px)">
-      <div class="full-width">
-        <q-toolbar dense style="user-select: none" class="'q-px-sm'">
-          <q-toolbar-title class="q-px-md" dense>
-            <q-item>
-              <q-item-section avatar>
-                <q-select
-                  v-model="searchKey"
-                  :options="searchKeyOptions"
-                  :label="$t('Search Keys')"
-                  dense
-                  clearable
-                  use-input
-                  fill-input
-                  aria-placeholder="Search"
-                  hide-selected
-                  @new-value="addSearchKeyOption"
-                  style="color: black; background-color: white; width: 400px"
-                  @blur="onBlur"
-                >
-                  <q-tooltip>{{ $t('if edited, hit enter key') }}</q-tooltip>
-                </q-select>
-              </q-item-section>
+      <div class="full-width" v-if="!isMobile">
+        <!-- {{ 'searchKey=' + searchKey }}
+        {{ '||||searchOptions=' + searchOptions }} -->
+        <!-- :options="filteredOptions" -->
+        <div class="row q-pa-sm">
+          <div class="col-4 q-pl-sm">
+            <q-select
+              v-model="searchKey"
+              filled
+              use-input
+              hide-selected
+              fill-input
+              :options="filteredOptions"
+              input-debounce="0"
+              :label="$t('Search Keys')"
+              @filter="filterFn"
+              @input-value="setModel"
+              @new-value="addSearchKeyOption"
+            >
+              <q-tooltip>{{ $t('if edited, hit enter key') }}</q-tooltip>
+            </q-select>
+          </div>
+          <div class="col-2 q-pl-sm">
+            <q-select
+              v-model="selectedMallName"
+              :options="myMallList"
+              dense
+              :label="$t('Mall Name')"
+              input-debounce="0"
+              style="col-2"
+            />
+          </div>
+          <div class="col-2 q-pl-sm">
+            <q-select
+              v-model="searchStartIndex"
+              :options="searchPointOptions"
+              dense
+              :label="$t('Start Point')"
+            />
+          </div>
 
-              <q-item-section avatar>
-                <q-select
-                  v-model="selectedMallName"
-                  :options="myMallList"
-                  dense
-                  :label="$t('Mall Name')"
-                  input-debounce="0"
-                  style="color: black; background-color: white; width: 150px"
-                />
-              </q-item-section>
+          <div class="col-2 q-pt-sm">
+            <span class="text-bold text-body1 text-grey-9">
+              {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
+            </span>
+          </div>
+          <div class="col-2 q-pl-sm">
+            <q-btn
+              icon="search"
+              @click="onSearch()"
+              :disable="!checkInputsValid()"
+              size="md"
+              color="primary"
+              class="q-ml-sm"
+              style="width: 5%"
+            >
+              <q-tooltip>{{ searchTooltip }}</q-tooltip>
+            </q-btn>
+          </div>
+        </div>
 
-              <q-item-section avatar>
-                <q-select
-                  v-model="searchStartIndex"
-                  :options="searchPointOptions"
-                  dense
-                  class="q-pl-md"
-                  style="width: 100px"
-                  :label="$t('Start Point')"
-                />
-              </q-item-section>
-
-              <q-item-section avatar>
-                <q-btn
-                  class="q-px-md"
-                  icon="search"
-                  @click="onSearch()"
-                  :disable="!checkInputsValid()"
-                  size="md"
-                  color="primary"
-                >
-                  <q-tooltip>{{ searchTooltip }}</q-tooltip>
-                </q-btn>
-              </q-item-section>
-
-              <q-item-section avatar class="q-pl-md">
-                <q-item-label class="text-bold text-body1" side
-                  >{{ $t('Ranking') }} : {{ myRankingNo === -1 ? '' : myRankingNo }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-toolbar-title>
-
-          <q-item> </q-item>
-        </q-toolbar>
-
-        <!-- virtual-scroll -->
-        <q-table
-          flat
-          square
-          hide-no-data
-          hide-pagination
-          :rows-per-page-options="[0]"
-          separator="horizontal"
-          class="sticky-column-table sticky-header-table q-px-sm"
-          :columns="columns"
-          :rows="productItems"
-          row-key="_id"
-          :table-row-class-fn="rowClassFn"
-        />
+        <!-- <q-item-section style="width: 20%; min-width: 20%"> -->
       </div>
+      <div v-else class="full-width">
+        <q-item :dense="isMobile" style="user-select: none" class="q-pa-sm full-width">
+          <!-- fill-input -->
+          <q-item-section :dense="isMobile" side>
+            <q-select
+              v-model="searchKey"
+              filled
+              use-input
+              hide-selected
+              fill-input
+              :options="filteredOptions"
+              input-debounce="0"
+              :label="$t('Search Keys')"
+              @filter="filterFn"
+              @input-value="setModel"
+              @new-value="addSearchKeyOption"
+            >
+              <q-tooltip>{{ $t('if edited, hit enter key') }}</q-tooltip>
+            </q-select>
+          </q-item-section>
+          <q-item-section :dense="isMobile" side>
+            <q-select
+              v-model="selectedMallName"
+              :options="myMallList"
+              dense
+              :label="$t('Mall Name')"
+              input-debounce="0"
+            />
+          </q-item-section>
+        </q-item>
+
+        <q-item :dense="isMobile" style="user-select: none" class="q-px-sm q-pt-none">
+          <q-item-section :dense="isMobile" side>
+            <q-select
+              v-model="searchStartIndex"
+              :options="searchPointOptions"
+              dense
+              :label="$t('Start Point')"
+            />
+          </q-item-section>
+
+          <q-item-section :dense="isMobile" side>
+            <span class="text-bold text-body1 text-grey-9">
+              {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
+            </span>
+          </q-item-section>
+          <q-item-section :dense="isMobile" side>
+            <q-btn
+              icon="search"
+              @click="onSearch()"
+              :disable="!checkInputsValid()"
+              size="sm"
+              color="primary"
+              class="q-ml-md"
+            >
+              <q-tooltip>{{ searchTooltip }}</q-tooltip>
+            </q-btn>
+          </q-item-section>
+        </q-item>
+      </div>
+      <q-table
+        flat
+        square
+        hide-no-data
+        hide-pagination
+        :rows-per-page-options="[0]"
+        separator="horizontal"
+        class="sticky-column-table sticky-header-table q-px-sm"
+        :columns="columns"
+        :rows="productItems"
+        row-key="_id"
+        :table-row-class-fn="rowClassFn"
+      >
+        <template v-slot:body-cell-title="props">
+          <q-td :props="props">
+            <span v-html="props.row.title"></span>
+          </q-td>
+        </template>
+      </q-table>
 
       <div style="height: 90px" />
     </q-scroll-area>
@@ -98,11 +156,13 @@ import { useI18n } from 'vue-i18n';
 import { apiNaver } from 'src/boot/axios';
 import type { QTableColumn } from 'quasar';
 import { useUserAccountStore } from 'src/stores/user-account';
+import { useScreenUtil } from 'src/composables/useScreenUtil';
 
 const loading = ref(false);
 
 const { t } = useI18n();
 const userAccountStore = useUserAccountStore();
+const { isMobile } = useScreenUtil();
 
 const productItems = ref([]);
 const show = ref({ contentsView: '' });
@@ -110,8 +170,12 @@ const myRankingNo = ref(-1);
 const selectedMallName = ref();
 const myMallList = ref<string[]>([]);
 
-const searchKeyOptions = ref<string[]>([]);
 const searchKey = ref('사자보이즈+의상');
+const searchOptions = ref<string[]>([]);
+const filteredOptions = ref<string[]>([]);
+function normalizeKorean(str: string): string {
+  return str.normalize('NFC').toLowerCase().trim();
+}
 
 const searchPointOptions = [
   { value: 1, label: '처음부터' },
@@ -188,32 +252,37 @@ const columns = computed(() => {
 });
 
 function addSearchKeyOption(val: string, done: (val: string) => void) {
+  val = val.trim();
+  if (val.length > 0) {
+    const found = searchOptions.value.find((item: string) => item === val);
+    if (!found) {
+      if (!found && searchOptions.value.length >= 10) searchOptions.value.pop();
+      searchOptions.value.unshift(val);
+      userAccountStore.setSearchKeyList(searchOptions.value);
+    }
+  }
   done(val);
-  const found = searchKeyOptions.value.find((item: string) => item === val);
-  if (val.length > 0 && !found && searchKeyOptions.value.length >= 20) {
-    searchKeyOptions.value.pop(); // remvoe last, //searchKeyOptions.value.shift();// remvoe first
-
-    searchKeyOptions.value.unshift(val);
-    userAccountStore.setSearchKeyList(searchKeyOptions.value);
-  }
 }
-const onBlur = () => {
-  console.log('onBlur', searchKey.value);
-  if (!searchKeyOptions.value.find((item: string) => item === searchKey.value)) {
-    searchKeyOptions.value.unshift(searchKey.value);
-    userAccountStore.setSearchKeyList(searchKeyOptions.value);
-  }
-};
+const setModel = (val: string) => (searchKey.value = val);
+function filterFn(val: string, update: (cb: () => void) => void) {
+  update(() => {
+    //console.log('filterFn', val);
+    if (val === '') {
+      filteredOptions.value = [...searchOptions.value];
+    } else {
+      //const needle = val.toLowerCase();
+      // filteredOptions.value = searchOptions.value.filter((opt) =>
+      //   opt.toLowerCase().includes(needle),
+      // );
+      //searchKey
+      const needle = normalizeKorean(val);
+      filteredOptions.value = searchOptions.value.filter((opt) =>
+        normalizeKorean(opt).includes(needle),
+      );
+    }
+  });
+}
 
-// const onFilterSearchKeyOption = (val, update) => {
-//   if (val.length > 0) update(val);
-//   else update('');
-// };
-// function deleterchKeyOption(val: string) {
-//   searchKeyOptions.value = searchKeyOptions.value.filter((item: string) => item !== val);
-//   userAccountStore.setSearchKeyList(searchKeyOptions.value);
-//   searchKey.value = '';
-// }
 function rowClassFn(row: RankItem): string {
   return row.mallName === selectedMallName.value ? 'bg-teal-1 text-bold' : '';
 }
@@ -233,10 +302,10 @@ const checkInputsValid = () => {
 const onSearch = async () => {
   try {
     loading.value = true;
-    const existingKey = searchKeyOptions.value.find((item: string) => item === searchKey.value);
+    const existingKey = searchOptions.value.find((item: string) => item === searchKey.value);
     if (!existingKey) {
-      searchKeyOptions.value.push(searchKey.value);
-      userAccountStore.setSearchKeyList(searchKeyOptions.value);
+      searchOptions.value.push(searchKey.value);
+      userAccountStore.setSearchKeyList(searchOptions.value);
     }
     myRankingNo.value = -1;
     productItems.value = [];
@@ -282,7 +351,8 @@ const onSearch = async () => {
 };
 onMounted(() => {
   show.value.contentsView = localStorage.getItem('view-list-or-chart') || 'chart';
-  searchKeyOptions.value = userAccountStore.searchKeyList;
+  searchOptions.value = userAccountStore.searchKeyList;
+
   myMallList.value = userAccountStore.malls.map((mall) => mall.name);
   if (myMallList.value.length > 0) selectedMallName.value = myMallList.value[0];
 });

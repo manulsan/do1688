@@ -10,10 +10,16 @@
           <q-badge class="q-ml-none" color="teal" align="top">v1.2</q-badge>
         </q-toolbar-title>
 
-        <q-label class="q-ml-md" color="primary">
-          {{ userAccountStore.email }}
-          <q-badge class="q-ml-none" color="teal" align="top">{{ userAccountStore.name }}</q-badge>
-        </q-label>
+        <span class="text-bold text-body1 text-grey-4">
+          {{ userAccountStore.name }}
+          <q-badge v-if="!isMobile" class="q-ml-none" color="teal" align="top">{{
+            userAccountStore.email
+          }}</q-badge>
+        </span>
+
+        <!-- <q-item-label class="q-ml-md" color="primary">
+          {{ userAccountStore.email }}          
+        </q-item-label> -->
       </q-toolbar>
     </q-header>
 
@@ -45,6 +51,9 @@ import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import { useI18n } from 'vue-i18n';
 import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
 import { useUserAccountStore } from 'src/stores/user-account';
+import { useScreenUtil } from 'src/composables/useScreenUtil';
+
+const { isMobile } = useScreenUtil();
 const leftDrawerOpen = ref(false);
 // const userName = ref('none');
 const userAccountStore = useUserAccountStore();
