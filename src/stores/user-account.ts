@@ -46,7 +46,6 @@ export const useUserAccountStore = defineStore('user-account', {
     },
 
     addMallName(name: string, description: string) {
-      console.log('addMallName', name, description);
       this.client.malls.push({
         name: name,
         description: description,

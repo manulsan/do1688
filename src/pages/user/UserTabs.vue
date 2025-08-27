@@ -54,7 +54,7 @@
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('Please enter your client secret')]"
           />
-          <q-separator class="q-my-md" />
+          <!-- <q-separator class="q-my-md" /> -->
           <q-input
             v-model="userName"
             :label="$t('Name')"
@@ -205,9 +205,11 @@ onMounted(() => {
   clientId.value = userAccountStore.id;
   clientSecret.value = userAccountStore.secret;
 
-  mallName.value = '';
-  mallDescription.value = '';
+  // mallName.value = '';
+  // mallDescription.value = '';
 
+  userName.value = userAccountStore.name;
+  userEmail.value = userAccountStore.email;
   mallList.value = userAccountStore.malls;
 });
 </script>

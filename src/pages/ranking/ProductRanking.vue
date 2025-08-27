@@ -2,76 +2,75 @@
   <q-page class="q-pa-none">
     <q-linear-progress v-if="loading" indeterminate />
     <q-scroll-area style="height: calc(100vh - 50px - 50px)">
-      <div class="full-width" v-if="!isMobile">
-        <!-- {{ 'searchKey=' + searchKey }}
-        {{ '||||searchOptions=' + searchOptions }} -->
-        <!-- :options="filteredOptions" -->
-        <div class="row q-pa-sm">
-          <div class="col-6 q-pl-sm">
-            <q-select
-              v-model="searchKey"
-              filled
-              use-input
-              hide-selected
-              fill-input
-              :options="filteredOptions"
-              input-debounce="0"
-              :label="$t('Search Keys')"
-              @filter="filterFn"
-              @input-value="setModel"
-              @new-value="addSearchKeyOption"
-            >
-              <q-tooltip>{{ $t('if edited, hit enter key') }}</q-tooltip>
-            </q-select>
-          </div>
-          <div class="col-2 q-pl-sm">
-            <q-select
-              v-model="selectedMallName"
-              :options="myMallList"
-              dense
-              :label="$t('Mall Name')"
-              input-debounce="0"
-              style="col-2"
-            />
-          </div>
-          <div class="col-2 q-pl-sm">
-            <q-select
-              v-model="searchStartIndex"
-              :options="searchPointOptions"
-              dense
-              :label="$t('Start Point')"
-            />
-          </div>
-
-          <div class="col-1 q-pt-sm">
-            <span class="text-bold text-body1 text-grey-9">
-              {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
-            </span>
-          </div>
-          <div class="col-1 q-pl-sm">
-            <q-btn
-              icon="search"
-              @click="onSearch()"
-              :disable="!checkInputsValid()"
-              size="md"
-              color="primary"
-              class="q-ml-sm"
-            >
-              <q-tooltip>{{ searchTooltip }}</q-tooltip>
-            </q-btn>
-          </div>
+      <div class="row full-width q-pa-sm" v-if="!isMobile">
+        <div class="col-5">
+          <q-select
+            v-model="searchKey"
+            filled
+            dense
+            use-input
+            hide-selected
+            fill-input
+            :options="filteredOptions"
+            input-debounce="0"
+            :label="$t('Search Keys')"
+            @filter="filterFn"
+            @input-value="setModel"
+            @new-value="addSearchKeyOption"
+          >
+            <q-tooltip>{{ $t('if edited, hit enter key') }}</q-tooltip>
+          </q-select>
+        </div>
+        <div class="col-2 q-pl-md">
+          <q-select
+            v-model="selectedMallName"
+            :options="myMallList"
+            dense
+            :label="$t('Mall Name')"
+            input-debounce="0"
+            style="col-2"
+          />
+        </div>
+        <div class="col-2 q-pl-md">
+          <q-select
+            v-model="searchStartIndex"
+            :options="searchPointOptions"
+            dense
+            :label="$t('Start Point')"
+          />
         </div>
 
-        <!-- <q-item-section style="width: 20%; min-width: 20%"> -->
+        <div class="col-2 flex justify-center items-center">
+          <q-btn
+            icon="search"
+            @click="onSearch()"
+            :disable="!checkInputsValid()"
+            :label="$t('Search')"
+            color="primary"
+          >
+            <q-tooltip>{{ searchTooltip }}</q-tooltip>
+          </q-btn>
+        </div>
+        <!-- <div class="col-2 q-pl-md q-pt-xs">
+          <span class="text-bold text-h6 text-grey-9">
+            {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
+          </span>
+        </div> -->
+        <div class="col-1 flex justify-center items-center q-pt-xs">
+          <span class="text-bold text-body1 text-grey-9">
+            {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
+          </span>
+        </div>
       </div>
-      <div v-else class="full-width">
-        <q-item :dense="isMobile" style="user-select: none" class="q-pa-sm full-width">
-          <!-- fill-input -->
-          <q-item-section :dense="isMobile" side>
+      <!------------------   mobile window ------------------>
+      <div v-else class="full-width q-pa-sm">
+        <div class="row q-pa-none">
+          <div class="col-9">
             <q-select
               v-model="searchKey"
               filled
               use-input
+              dense
               hide-selected
               fill-input
               :options="filteredOptions"
@@ -83,8 +82,8 @@
             >
               <q-tooltip>{{ $t('if edited, hit enter key') }}</q-tooltip>
             </q-select>
-          </q-item-section>
-          <q-item-section :dense="isMobile" side>
+          </div>
+          <div class="col-3 q-pl-md">
             <q-select
               v-model="selectedMallName"
               :options="myMallList"
@@ -92,37 +91,35 @@
               :label="$t('Mall Name')"
               input-debounce="0"
             />
-          </q-item-section>
-        </q-item>
-
-        <q-item :dense="isMobile" style="user-select: none" class="q-px-sm q-pt-none">
-          <q-item-section :dense="isMobile" side>
+          </div>
+        </div>
+        <div class="row q-pa-none q-pt-sm">
+          <div class="col-4 q-ml-xs">
             <q-select
               v-model="searchStartIndex"
               :options="searchPointOptions"
               dense
               :label="$t('Start Point')"
             />
-          </q-item-section>
+          </div>
 
-          <q-item-section :dense="isMobile" side>
-            <span class="text-bold text-body1 text-grey-9">
-              {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
-            </span>
-          </q-item-section>
-          <q-item-section :dense="isMobile" side>
+          <div class="col-4 flex justify-center items-center">
             <q-btn
               icon="search"
               @click="onSearch()"
               :disable="!checkInputsValid()"
-              size="sm"
               color="primary"
-              class="q-ml-md"
+              :label="$t('Search')"
             >
               <q-tooltip>{{ searchTooltip }}</q-tooltip>
             </q-btn>
-          </q-item-section>
-        </q-item>
+          </div>
+          <div class="col-4 flex justify-center items-center q-pt-xs">
+            <span class="text-bold text-body1 text-grey-9">
+              {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
+            </span>
+          </div>
+        </div>
       </div>
       <q-table
         flat
@@ -143,8 +140,7 @@
           </q-td>
         </template>
       </q-table>
-
-      <div style="height: 90px" />
+      <!-- <div style="height: 90px" /> -->
     </q-scroll-area>
   </q-page>
 </template>
@@ -265,15 +261,9 @@ function addSearchKeyOption(val: string, done: (val: string) => void) {
 const setModel = (val: string) => (searchKey.value = val);
 function filterFn(val: string, update: (cb: () => void) => void) {
   update(() => {
-    //console.log('filterFn', val);
     if (val === '') {
       filteredOptions.value = [...searchOptions.value];
     } else {
-      //const needle = val.toLowerCase();
-      // filteredOptions.value = searchOptions.value.filter((opt) =>
-      //   opt.toLowerCase().includes(needle),
-      // );
-      //searchKey
       const needle = normalizeKorean(val);
       filteredOptions.value = searchOptions.value.filter((opt) =>
         normalizeKorean(opt).includes(needle),
@@ -286,6 +276,12 @@ function rowClassFn(row: RankItem): string {
   return row.mallName === selectedMallName.value ? 'bg-teal-1 text-bold' : '';
 }
 
+const checkInputsValid = () => {
+  if (!searchKey.value || !selectedMallName.value) return false;
+  if (userAccountStore.id.length <= 0 || userAccountStore.secret.length <= 0) return false;
+  return true;
+};
+
 const searchTooltip = computed(() => {
   if (!searchKey.value) return t('Search Key Missed');
   else if (!selectedMallName.value) return t('Mall Name Missed');
@@ -293,11 +289,7 @@ const searchTooltip = computed(() => {
   else if (!userAccountStore.secret) return t('Client Secret Missed');
   else return t('Search');
 });
-const checkInputsValid = () => {
-  if (!searchKey.value || !selectedMallName.value) return false;
-  if (userAccountStore.id.length <= 0 || userAccountStore.secret.length <= 0) return false;
-  return true;
-};
+
 const onSearch = async () => {
   try {
     loading.value = true;

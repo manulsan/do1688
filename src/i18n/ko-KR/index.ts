@@ -29,7 +29,7 @@ export default {
   Price: '가격',
   'Start Point': '시작점',
   Delete: '지우기',
-  Ranking: '랭킹',
+  Ranking: '순위',
   Language: '언어',
   'Search Key Missed': '검색어 입력하세요',
   'Mall Name Missed': '몰 이름 설정 하세요, 메뉴->설정->사용자 몰',
