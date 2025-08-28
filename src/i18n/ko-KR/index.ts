@@ -46,4 +46,6 @@ export default {
     '클라이언트 아이디 생성을 위한 힌트는 아래 링크를 클릭해주세요',
   'DAOL Help Center': 'DAOL 고객 센터',
   'CAFE24 Help Center': 'CAFE24 고객 센터',
+  'User Information is not set': '사용자 정보가 설정이 없습니다, 설정 페이지로 이동합니다.!!!',
+  'User Mall is not set': '사용자 몰 설정이 없습니다, 설정 페이지로 이동합니다.!!!',
 };

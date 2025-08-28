@@ -2,7 +2,7 @@
   <q-page>
     <q-tabs v-model="tab" dense align="left" class="text-teal q-pl-md q-pt-sm">
       <q-tab name="user_account" icon="lock" :label="$t('User Account')" />
-      <q-tab name="malls" icon="shopping_cart" :label="$t('User Malls')" />
+      <q-tab name="user_mall" icon="shopping_cart" :label="$t('User Malls')" />
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
@@ -82,7 +82,7 @@
         </q-form>
       </q-tab-panel>
 
-      <q-tab-panel name="malls">
+      <q-tab-panel name="user_mall">
         <draggable
           v-model="myMalls"
           item-key="name"
@@ -168,6 +168,8 @@ const mallDescription = ref('');
 import draggable from 'vuedraggable';
 import type { SortableEvent } from 'sortablejs';
 import { useUserAccountStore } from 'src/stores/user-account';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const userAccountStore = useUserAccountStore();
 const mallList = ref([] as { name: string; description: string }[]);
@@ -200,13 +202,19 @@ function onDragEnd(evt: SortableEvent) {
   else userAccountStore.updateMallNameOrders(evt.oldIndex as number, evt.newIndex);
 }
 const myMalls = computed(() => userAccountStore.malls);
+
 onMounted(() => {
   console.log('userAccountStore.id=', userAccountStore.id);
   clientId.value = userAccountStore.id;
   clientSecret.value = userAccountStore.secret;
 
-  // mallName.value = '';
-  // mallDescription.value = '';
+  //----------------------------------------------------------------------------
+  const queryData = router.currentRoute.value.query; //const path = router.currentRoute.value.path;
+  if (queryData?.tab === 'user_account') tab.value = 'user_account';
+  else if (queryData?.tab === 'user_mall') tab.value = 'user_mall';
+
+  const wquery = router.currentRoute.value.query;
+  console.log('query:', wquery);
 
   userName.value = userAccountStore.name;
   userEmail.value = userAccountStore.email;

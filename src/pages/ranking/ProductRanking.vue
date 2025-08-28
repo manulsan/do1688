@@ -339,9 +339,16 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 onMounted(async () => {
   //----------------------------------------------------------------------------
-  // if client id or client secret is not set, redirect to user page
-  if (userAccountStore.id.length <= 0 || userAccountStore.secret.length <= 0)
-    await router.push('/user');
+  // if User Information is not set, redirect to user page
+  if (userAccountStore.id.length <= 0 || userAccountStore.secret.length <= 0) {
+    alert(t('User Information is not set'));
+    await router.push({ path: '/user', query: { tab: 'user_account' } });
+  }
+  if (userAccountStore.malls.length <= 0) {
+    alert(t('User Mall is not set'));
+    await router.push({ path: '/user', query: { tab: 'user_mall' } });
+  }
+  //----------------------------------------------------------------------------
 
   searchOptions.value = userAccountStore.searchKeyList;
   myMallList.value = userAccountStore.malls.map((mall) => mall.name);
