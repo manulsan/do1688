@@ -2,6 +2,10 @@
 
 A Quasar Project
 
+## Running Demo
+
+[Live Demo](https://do1688.vercel.app)
+
 ## Install the dependencies
 
 ```bash
