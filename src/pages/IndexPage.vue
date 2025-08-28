@@ -12,26 +12,13 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-//import type { Todo, Meta } from 'components/models';
-//import ExampleComponent from 'components/ExampleComponent.vue';
 import { useRouter } from 'vue-router';
-
 const router = useRouter();
-
-// const todos = ref<Todo[]>([
-//   { id: 1, content: 'ct1' },
-//   { id: 2, content: 'ct2' },
-//   { id: 3, content: 'ct3' },
-//   { id: 4, content: 'ct4' },
-//   { id: 5, content: 'ct5' },
-// ]);
-
-// const meta = ref<Meta>({
-//   totalCount: 1200,
-// });
 
 onMounted(async () => {
   try {
+    //----------------------------------------------------------------------------
+    // move to ranking page
     await router.push('/ranking');
   } catch (error) {
     console.log(error);

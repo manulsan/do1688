@@ -160,7 +160,7 @@ const userAccountStore = useUserAccountStore();
 const { isMobile } = useScreenUtil();
 
 const productItems = ref([]);
-const show = ref({ contentsView: '' });
+
 const myRankingNo = ref(-1);
 const selectedMallName = ref();
 const myMallList = ref<string[]>([]);
@@ -340,10 +340,15 @@ const onSearch = async () => {
     loading.value = false;
   }
 };
-onMounted(() => {
-  show.value.contentsView = localStorage.getItem('view-list-or-chart') || 'chart';
-  searchOptions.value = userAccountStore.searchKeyList;
+import { useRouter } from 'vue-router';
+const router = useRouter();
+onMounted(async () => {
+  //----------------------------------------------------------------------------
+  // if client id or client secret is not set, redirect to user page
+  if (userAccountStore.id.length <= 0 || userAccountStore.secret.length <= 0)
+    await router.push('/user');
 
+  searchOptions.value = userAccountStore.searchKeyList;
   myMallList.value = userAccountStore.malls.map((mall) => mall.name);
   if (myMallList.value.length > 0) selectedMallName.value = myMallList.value[0];
 });
