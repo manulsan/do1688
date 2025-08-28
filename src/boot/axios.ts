@@ -25,7 +25,7 @@ console.log('baseURL=', baseURL);
 const apiNaver = axios.create({
   baseURL: baseURL as string,
   headers: {
-    'Content-Type': 'application/json', // 'X-Naver-Client-Id': 'q_4av_CgXqetHsoPVQq8',    // 'X-Naver-Client-Secret': '8IpmpZvDPN',
+    'Content-Type': 'application/json', // 'X-Naver-Client-Id': 'q_4av_**************',    // 'X-Naver-Client-Secret': '0000000000',
   },
 });
 export default defineBoot(({ app }) => {
