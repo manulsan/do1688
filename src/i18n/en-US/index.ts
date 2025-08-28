@@ -39,7 +39,7 @@ export default {
   'if edited, hit enter key': 'if edited, hit enter key to save',
   Hint: 'Hint',
   'Hint for Client ID': 'Hint for Client ID',
-  'If you need clientId hint, click below link': 'If you need clientId hint, click below link',
+  'If you need client ID, click below link': 'If you make Naver Client ID, Click below link',
   'DAOL Help Center': 'DAOL Help Center',
   'CAFE24 Help Center': 'CAFE24 Help Center',
   'User Information is not set': 'User Information is not set, Moving to User Page',

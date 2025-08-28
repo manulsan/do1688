@@ -36,7 +36,7 @@
           >
             <q-item-label class="text-bold text-body1">
               <span>
-                {{ $t('If you need clientId hint, click below link') }}
+                {{ $t('If you need client ID, click below link') }}
               </span>
             </q-item-label>
 
