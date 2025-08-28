@@ -114,7 +114,7 @@
               <q-tooltip>{{ searchTooltip }}</q-tooltip>
             </q-btn>
           </div>
-          <div class="col-4 flex justify-center items-center q-pt-xs">
+          <div class="col-3 flex justify-center items-center q-pt-xs">
             <span class="text-bold text-body1 text-grey-9">
               {{ $t('Ranking') }} : {{ myRankingNo === -1 ? '?' : myRankingNo }}
             </span>
