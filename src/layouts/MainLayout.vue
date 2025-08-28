@@ -7,7 +7,7 @@
         <!-- <q-toolbar-title> Ranking One </q-toolbar-title> -->
         <q-toolbar-title @click="$router.push('/')" style="cursor: pointer">
           {{ $t('Rank One') }}
-          <q-badge class="q-ml-none" color="teal" align="top">v1.2</q-badge>
+          <q-badge class="q-ml-none" color="teal" align="top">v1.3</q-badge>
         </q-toolbar-title>
 
         <span class="text-bold text-body1 text-grey-4">
