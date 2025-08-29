@@ -4,22 +4,17 @@
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
-        <!-- <q-toolbar-title> Ranking One </q-toolbar-title> -->
         <q-toolbar-title @click="$router.push('/')" style="cursor: pointer">
           {{ $t('Rank One') }}
           <q-badge class="q-ml-none" color="teal" align="top">v1.3</q-badge>
         </q-toolbar-title>
 
-        <span class="text-bold text-body1 text-grey-4">
+        <!-- <span class="text-bold text-body1 text-grey-4">
           {{ userAccountStore.name }}
           <q-badge v-if="!isMobile" class="q-ml-none" color="teal" align="top">{{
             userAccountStore.email
           }}</q-badge>
-        </span>
-
-        <!-- <q-item-label class="q-ml-md" color="primary">
-          {{ userAccountStore.email }}          
-        </q-item-label> -->
+        </span> -->
       </q-toolbar>
     </q-header>
 
@@ -54,6 +49,7 @@ import { useUserAccountStore } from 'src/stores/user-account';
 import { useScreenUtil } from 'src/composables/useScreenUtil';
 
 const { isMobile } = useScreenUtil();
+console.log('isMobile=', isMobile);
 const leftDrawerOpen = ref(false);
 // const userName = ref('none');
 const userAccountStore = useUserAccountStore();
@@ -69,7 +65,7 @@ const menuItems: EssentialLinkProps[] = [
   },
   {
     title: 'setup',
-    caption: 'setup user account',
+    caption: 'setup User Settings',
     icon: 'settings',
     to: '/user',
     seperator: false,

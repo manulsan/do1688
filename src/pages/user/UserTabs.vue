@@ -1,8 +1,8 @@
 <template>
   <q-page>
     <q-tabs v-model="tab" dense align="left" class="text-teal q-pl-md q-pt-sm">
-      <q-tab name="user_account" icon="lock" :label="$t('User Account')" />
-      <q-tab name="user_mall" icon="shopping_cart" :label="$t('User Malls')" />
+      <q-tab name="user_account" icon="lock" :label="$t('User Settings')" />
+      <q-tab name="user_mall" icon="shopping_cart" :label="$t('User Store')" />
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
@@ -47,22 +47,21 @@
               <a :href="naverIdHit2" target="_blank"> {{ $t('CAFE24 Help Center') }} </a>
             </q-item-label>
           </div>
-          <!-- type="password" -->
           <q-input
             v-model="clientSecret"
             :label="$t('Client Secret')"
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('Please enter your client secret')]"
           />
-          <!-- <q-separator class="q-my-md" /> -->
           <q-input
+            v-if="false"
             v-model="userName"
             :label="$t('Name')"
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('Please enter your name')]"
           />
-
           <q-input
+            v-if="false"
             v-model="userEmail"
             :label="$t('Email')"
             lazy-rules
@@ -115,10 +114,10 @@
           <q-separator class="q-my-md" />
           <q-input
             v-model="mallName"
-            :label="$t('Mall Name')"
+            :label="$t('Store Name')"
             dense
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('Please enter mall name')]"
+            :rules="[(val) => (val && val.length > 0) || $t('Please enter store name')]"
             style="width: 300px"
           >
           </q-input>
@@ -128,10 +127,10 @@
             :label="$t('Description')"
             style="width: 300px"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('Please enter mall description')]"
+            :rules="[(val) => (val && val.length > 0) || $t('Please enter store description')]"
           />
           <q-btn
-            :label="$t('Add Mall')"
+            :label="$t('Add Store')"
             icon="add"
             color="primary"
             class="q-mt-md"
@@ -160,8 +159,8 @@ const naverIdHit2 = ref(
 const clientId = ref('');
 const clientSecret = ref('');
 
-const userName = ref('');
-const userEmail = ref('');
+const userName = ref('...');
+const userEmail = ref('^^');
 
 const mallName = ref('');
 const mallDescription = ref('');
@@ -184,9 +183,9 @@ const onSaveAccount = () => {
   userAccountStore.setUserEmail(userEmail.value);
 };
 const tooltipAddMall = computed(() => {
-  if (!mallName.value) return 'Please enter mall name';
-  else if (!mallDescription.value) return 'Please enter mall description';
-  else return 'Add Mall';
+  if (!mallName.value) return 'Please enter store name';
+  else if (!mallDescription.value) return 'Please enter store description';
+  else return 'Add Store';
 });
 const isMallInputsValid = () => {
   //if (mallName.value.length > 0 && mallDescription.value.length > 0)

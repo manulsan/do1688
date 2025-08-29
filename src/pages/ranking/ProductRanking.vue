@@ -25,7 +25,7 @@
           v-model="selectedMallName"
           :options="myMallList"
           dense
-          :label="$t('Mall Name')"
+          :label="$t('Store Name')"
           input-debounce="0"
           style="col-2"
         />
@@ -82,7 +82,7 @@
             v-model="selectedMallName"
             :options="myMallList"
             dense
-            :label="$t('Mall Name')"
+            :label="$t('Store Name')"
             input-debounce="0"
           />
         </div>
@@ -160,7 +160,7 @@ const myRankingNo = ref(-1);
 const selectedMallName = ref();
 const myMallList = ref<string[]>([]);
 
-const searchKey = ref('사자보이즈+의상');
+const searchKey = ref('사자보이즈 의상');
 const searchOptions = ref<string[]>([]);
 const filteredOptions = ref<string[]>([]);
 function normalizeKorean(str: string): string {
@@ -230,7 +230,7 @@ const columns = computed(() => {
 
   cols.push({
     name: 'mall',
-    label: t('Mall Name'),
+    label: t('Store Name'),
     field: (row) => {
       return row.mallName;
     },
@@ -279,7 +279,7 @@ const checkInputsValid = () => {
 
 const searchTooltip = computed(() => {
   if (!searchKey.value) return t('Search Key Missed');
-  else if (!selectedMallName.value) return t('Mall Name Missed');
+  else if (!selectedMallName.value) return t('Store Name Missed');
   else if (!userAccountStore.id) return t('Client ID Missed');
   else if (!userAccountStore.secret) return t('Client Secret Missed');
   else return t('Search');
