@@ -22,7 +22,7 @@
       </div>
       <div class="col-2 q-pl-md">
         <q-select
-          v-model="selectedMallName"
+          v-model="selectedStore"
           :options="myMallList"
           dense
           :label="$t('Store Name')"
@@ -79,7 +79,7 @@
         </div>
         <div class="col-3 q-pl-md">
           <q-select
-            v-model="selectedMallName"
+            v-model="selectedStore"
             :options="myMallList"
             dense
             :label="$t('Store Name')"
@@ -145,19 +145,20 @@ import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { apiNaver } from 'src/boot/axios';
 import type { QTableColumn } from 'quasar';
-import { useUserAccountStore } from 'src/stores/user-account';
+//import { useuserSettingStore } from 'src/stores/user-account';
+import { useUserSettingStore } from 'src/stores/user-setting';
 import { useScreenUtil } from 'src/composables/useScreenUtil';
 
 const loading = ref(false);
 
 const { t } = useI18n();
-const userAccountStore = useUserAccountStore();
+const userSettingStore = useUserSettingStore();
 const { isMobile } = useScreenUtil();
 
 const productItems = ref([]);
 
 const myRankingNo = ref(-1);
-const selectedMallName = ref();
+const selectedStore = ref();
 const myMallList = ref<string[]>([]);
 
 const searchKey = ref('사자보이즈 의상');
@@ -229,7 +230,7 @@ const columns = computed(() => {
   });
 
   cols.push({
-    name: 'mall',
+    name: 'Store',
     label: t('Store Name'),
     field: (row) => {
       return row.mallName;
@@ -248,7 +249,7 @@ function addSearchKeyOption(val: string, done: (val: string) => void) {
     if (!found) {
       if (!found && searchOptions.value.length >= 10) searchOptions.value.pop();
       searchOptions.value.unshift(val);
-      userAccountStore.setSearchKeyList(searchOptions.value);
+      userSettingStore.setSearchKeyList(searchOptions.value);
     }
   }
   done(val);
@@ -268,20 +269,20 @@ function filterFn(val: string, update: (cb: () => void) => void) {
 }
 
 function rowClassFn(row: RankItem): string {
-  return row.mallName === selectedMallName.value ? 'bg-teal-1 text-bold' : '';
+  return row.mallName === selectedStore.value ? 'bg-teal-1 text-bold' : '';
 }
 
 const checkInputsValid = () => {
-  if (!searchKey.value || !selectedMallName.value) return false;
-  if (userAccountStore.id.length <= 0 || userAccountStore.secret.length <= 0) return false;
+  if (!searchKey.value || !selectedStore.value) return false;
+  if (userSettingStore.id.length <= 0 || userSettingStore.secret.length <= 0) return false;
   return true;
 };
 
 const searchTooltip = computed(() => {
   if (!searchKey.value) return t('Search Key Missed');
-  else if (!selectedMallName.value) return t('Store Name Missed');
-  else if (!userAccountStore.id) return t('Client ID Missed');
-  else if (!userAccountStore.secret) return t('Client Secret Missed');
+  else if (!selectedStore.value) return t('Store Name Missed');
+  else if (!userSettingStore.id) return t('Client ID Missed');
+  else if (!userSettingStore.secret) return t('Client Secret Missed');
   else return t('Search');
 });
 
@@ -291,7 +292,7 @@ const onSearch = async () => {
     const existingKey = searchOptions.value.find((item: string) => item === searchKey.value);
     if (!existingKey) {
       searchOptions.value.push(searchKey.value);
-      userAccountStore.setSearchKeyList(searchOptions.value);
+      userSettingStore.setSearchKeyList(searchOptions.value);
     }
     myRankingNo.value = -1;
     productItems.value = [];
@@ -308,19 +309,19 @@ const onSearch = async () => {
         display: 100,
         sort: 'sim',
         start: searchStartIndex.value.value, //1,101,,,
-        Client_Id: userAccountStore.id,
-        Client_Secret: userAccountStore.secret,
+        Client_Id: userSettingStore.id,
+        Client_Secret: userSettingStore.secret,
       },
       headers: {
-        'X-Naver-Client-Id': userAccountStore.id,
-        'X-Naver-Client-Secret': userAccountStore.secret,
+        'X-Naver-Client-Id': userSettingStore.id,
+        'X-Naver-Client-Secret': userSettingStore.secret,
       },
     });
 
     console.log(' response.data=', response.data);
     if ('items' in response.data) {
       productItems.value = response.data.items.map((d: RankItem, index: number) => {
-        if (d.mallName === selectedMallName.value)
+        if (d.mallName === selectedStore.value)
           myRankingNo.value = index + searchStartIndex.value.value;
         return {
           ...d,
@@ -340,19 +341,21 @@ const router = useRouter();
 onMounted(async () => {
   //----------------------------------------------------------------------------
   // if User Information is not set, redirect to user page
-  if (userAccountStore.id.length <= 0 || userAccountStore.secret.length <= 0) {
+  if (userSettingStore.id.length <= 0 || userSettingStore.secret.length <= 0) {
     alert(t('User Information is not set'));
-    await router.push({ path: '/user', query: { tab: 'user_account' } });
+    await router.push({ path: '/user', query: { tab: 'user_setting' } });
   }
-  if (userAccountStore.malls.length <= 0) {
-    alert(t('User Mall is not set'));
-    await router.push({ path: '/user', query: { tab: 'user_mall' } });
+  if (userSettingStore.stores.length <= 0) {
+    alert(t('User Store is not set'));
+    await router.push({ path: '/user', query: { tab: 'store_setting' } });
   }
-  //----------------------------------------------------------------------------
 
-  searchOptions.value = userAccountStore.searchKeyList;
-  myMallList.value = userAccountStore.malls.map((mall) => mall.name);
-  if (myMallList.value.length > 0) selectedMallName.value = myMallList.value[0];
+  // ----------------------------------------------------------------------------
+  // searchKeyList as history log
+  searchOptions.value = userSettingStore.searchKeyList;
+
+  myMallList.value = userSettingStore.stores.map((mall) => mall.name);
+  if (myMallList.value.length > 0) selectedStore.value = myMallList.value[0];
 });
 </script>
 <style lang="scss" scoped></style>

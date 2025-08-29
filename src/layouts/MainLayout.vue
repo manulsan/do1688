@@ -6,13 +6,13 @@
 
         <q-toolbar-title @click="$router.push('/')" style="cursor: pointer">
           {{ $t('Rank One') }}
-          <q-badge class="q-ml-none" color="teal" align="top">v1.3</q-badge>
+          <q-badge class="q-ml-none" color="teal" align="top">v1.4</q-badge>
         </q-toolbar-title>
 
         <!-- <span class="text-bold text-body1 text-grey-4">
-          {{ userAccountStore.name }}
+          {{ useUserSetting.name }}
           <q-badge v-if="!isMobile" class="q-ml-none" color="teal" align="top">{{
-            userAccountStore.email
+            useUserSetting.email
           }}</q-badge>
         </span> -->
       </q-toolbar>
@@ -45,14 +45,15 @@ import { ref, onMounted, onBeforeMount } from 'vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import { useI18n } from 'vue-i18n';
 import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
-import { useUserAccountStore } from 'src/stores/user-account';
+//import { useuserSettingStore } from 'src/stores/user-account';
+import { useUserSettingStore } from 'src/stores/user-setting';
 import { useScreenUtil } from 'src/composables/useScreenUtil';
 
 const { isMobile } = useScreenUtil();
 console.log('isMobile=', isMobile);
 const leftDrawerOpen = ref(false);
 // const userName = ref('none');
-const userAccountStore = useUserAccountStore();
+const userSettingStore = useUserSettingStore();
 const { locale } = useI18n({ useScope: 'global' });
 
 const menuItems: EssentialLinkProps[] = [
@@ -77,12 +78,12 @@ function toggleLeftDrawer() {
 }
 
 onMounted(() => {
-  //userAccountStore.load();
+  //userSettingStore.load();
   const language = localStorage.getItem('userLanguage');
   locale.value = language ?? 'en-US';
 });
 
 onBeforeMount(() => {
-  userAccountStore.load();
+  userSettingStore.load();
 });
 </script>

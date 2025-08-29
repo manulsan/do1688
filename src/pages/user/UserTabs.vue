@@ -1,13 +1,12 @@
 <template>
   <q-page>
     <q-tabs v-model="tab" dense align="left" class="text-teal q-pl-md q-pt-sm">
-      <q-tab name="user_account" icon="lock" :label="$t('User Settings')" />
-      <q-tab name="user_mall" icon="shopping_cart" :label="$t('User Store')" />
+      <q-tab name="user_setting" icon="lock" :label="$t('User Settings')" />
+      <q-tab name="store_setting" icon="shopping_cart" :label="$t('User Store')" />
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated>
-      <q-tab-panel name="user_account">
-        <!-- {{ 'userAccountStore.id=' + userAccountStore.id }} -->
+      <q-tab-panel name="user_setting">
         <q-form @submit="onSaveAccount">
           <q-input
             v-model="clientId"
@@ -81,9 +80,9 @@
         </q-form>
       </q-tab-panel>
 
-      <q-tab-panel name="user_mall">
+      <q-tab-panel name="store_setting">
         <draggable
-          v-model="myMalls"
+          v-model="myStores"
           item-key="name"
           animation="200"
           handle=".drag-handle"
@@ -103,17 +102,17 @@
               </q-item-section>
 
               <q-item-section avatar>
-                <q-icon name="delete" color="red" @click="deleteMallName(element.name)" />
+                <q-icon name="delete" color="red" @click="deletestoreName(element.name)" />
               </q-item-section>
             </q-item>
           </template>
         </draggable>
 
-        <!------- **** mall tab **** ------->
-        <q-form @submit="onRegisterMall" class="q-mx-lg" dense>
+        <!------- **** store  tab **** ------->
+        <q-form @submit="onRegisterStore" class="q-mx-lg" dense>
           <q-separator class="q-my-md" />
           <q-input
-            v-model="mallName"
+            v-model="storeName"
             :label="$t('Store Name')"
             dense
             lazy-rules
@@ -122,7 +121,7 @@
           >
           </q-input>
           <q-input
-            v-model="mallDescription"
+            v-model="storeDescription"
             dense
             :label="$t('Description')"
             style="width: 300px"
@@ -135,9 +134,9 @@
             color="primary"
             class="q-mt-md"
             type="submit"
-            :disable="!isMallInputsValid()"
+            :disable="!isStoreInputsValid()"
           >
-            <q-tooltip>{{ $t(tooltipAddMall) }}</q-tooltip>
+            <q-tooltip>{{ $t(tooltipAddStore) }}</q-tooltip>
           </q-btn>
         </q-form>
       </q-tab-panel>
@@ -148,7 +147,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 
-const tab = ref('user_account');
+const tab = ref('user_setting');
 const showClientIdHint = ref(false);
 const naverIdHit1 = ref(
   'https://daolcom.com/board/manual/read.html?no=9251&board_no=101&category_no=5&cate_no=5&category_no=5',
@@ -162,35 +161,39 @@ const clientSecret = ref('');
 const userName = ref('...');
 const userEmail = ref('^^');
 
-const mallName = ref('');
-const mallDescription = ref('');
+const storeName = ref('');
+const storeDescription = ref('');
 import draggable from 'vuedraggable';
 import type { SortableEvent } from 'sortablejs';
-import { useUserAccountStore } from 'src/stores/user-account';
+//import { useuserSettingStore } from 'src/stores/user-account';
+import { useUserSettingStore } from 'src/stores/user-setting';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-const userAccountStore = useUserAccountStore();
-const mallList = ref([] as { name: string; description: string }[]);
+const userSettingStore = useUserSettingStore();
+const myStores = computed(() => userSettingStore.stores);
 
-const deleteMallName = (name: string) => userAccountStore.deleteMallName(name);
-const onRegisterMall = () => userAccountStore.addMallName(mallName.value, mallDescription.value);
-const onSaveAccount = () => {
-  userAccountStore.setClientId(clientId.value);
-  userAccountStore.setClientSecret(clientSecret.value);
-
-  userAccountStore.setUserName(userName.value);
-  userAccountStore.setUserEmail(userEmail.value);
+const deletestoreName = (name: string) => userSettingStore.deleteStore(name);
+const onRegisterStore = () => {
+  userSettingStore.addStore(storeName.value, storeDescription.value);
+  storeName.value = '';
+  storeDescription.value = '';
 };
-const tooltipAddMall = computed(() => {
-  if (!mallName.value) return 'Please enter store name';
-  else if (!mallDescription.value) return 'Please enter store description';
+const onSaveAccount = () => {
+  userSettingStore.setClientId(clientId.value);
+  userSettingStore.setClientSecret(clientSecret.value);
+
+  userSettingStore.setUserName(userName.value);
+  userSettingStore.setUserEmail(userEmail.value);
+};
+const tooltipAddStore = computed(() => {
+  if (!storeName.value) return 'Please enter store name';
+  else if (!storeDescription.value) return 'Please enter store description';
   else return 'Add Store';
 });
-const isMallInputsValid = () => {
-  //if (mallName.value.length > 0 && mallDescription.value.length > 0)
-  if (mallName.value.length > 0) {
-    const dup = myMalls.value.find((mall) => mall.name === mallName.value);
+const isStoreInputsValid = () => {
+  if (storeName.value.length > 0) {
+    const dup = myStores.value.find((d) => d.name === storeName.value);
     return dup === undefined;
   }
   return false;
@@ -198,25 +201,18 @@ const isMallInputsValid = () => {
 
 function onDragEnd(evt: SortableEvent) {
   if ((evt.oldIndex, evt.newIndex === undefined)) return;
-  else userAccountStore.updateMallNameOrders(evt.oldIndex as number, evt.newIndex);
+  else userSettingStore.updateStoreOrder(evt.oldIndex as number, evt.newIndex);
 }
-const myMalls = computed(() => userAccountStore.malls);
 
 onMounted(() => {
-  console.log('userAccountStore.id=', userAccountStore.id);
-  clientId.value = userAccountStore.id;
-  clientSecret.value = userAccountStore.secret;
+  clientId.value = userSettingStore.id;
+  clientSecret.value = userSettingStore.secret;
 
-  //----------------------------------------------------------------------------
-  const queryData = router.currentRoute.value.query; //const path = router.currentRoute.value.path;
-  if (queryData?.tab === 'user_account') tab.value = 'user_account';
-  else if (queryData?.tab === 'user_mall') tab.value = 'user_mall';
+  const query = router.currentRoute.value.query; //const path = router.currentRoute.value.path;
+  if (query?.tab === 'user_setting') tab.value = 'user_setting';
+  else if (query?.tab === 'store_setting') tab.value = 'store_setting';
 
-  const wquery = router.currentRoute.value.query;
-  console.log('query:', wquery);
-
-  userName.value = userAccountStore.name;
-  userEmail.value = userAccountStore.email;
-  mallList.value = userAccountStore.malls;
+  userName.value = userSettingStore.name;
+  userEmail.value = userSettingStore.email;
 });
 </script>

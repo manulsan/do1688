@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 
-export const useUserAccountStore = defineStore('user-account', {
+export const useUserSettingStore = defineStore('user-setting', {
   state: () => ({
     client: {
       id: '',
@@ -34,12 +34,6 @@ export const useUserAccountStore = defineStore('user-account', {
       this.save();
     },
 
-    /*************  ✨ Windsurf Command ⭐  *************/
-    /**
-     * Set the user's name.
-     * @param {string} name - The user's name.
-     */
-    /*******  615fabfd-3242-4bc3-a816-e72453028e17  *******/
     setUserName(name: string) {
       this.user.name = name;
       this.save();
@@ -97,5 +91,5 @@ export const useUserAccountStore = defineStore('user-account', {
 });
 
 if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useUserAccountStore, import.meta.hot));
+  import.meta.hot.accept(acceptHMRUpdate(useUserSettingStore, import.meta.hot));
 }

@@ -46,6 +46,6 @@ export default {
   'DAOL Help Center': 'DAOL 고객 센터',
   'CAFE24 Help Center': 'CAFE24 고객 센터',
   'User Information is not set': '사용자 정보가 설정이 없습니다, 설정 페이지로 이동합니다.!!!',
-  'User Mall is not set': '사용자 스토어가 설정되지 않았습니다, 설정 페이지로 이동합니다.!!!',
+  'User Store is not set': '사용자 스토어가 설정되지 않았습니다, 설정 페이지로 이동합니다.!!!',
   'Nick Name': 'Nick Name',
 };

@@ -21,7 +21,7 @@ if (import.meta.env.DEV) baseURL = '/api/naver';
 else if (import.meta.env.PROD) {
   baseURL = 'https://do1688.vercel.app/api'; // baseURL = 'https://openapi.naver.com/v1';
 }
-console.log('baseURL=', baseURL);
+//console.log('baseURL=', baseURL);
 const apiNaver = axios.create({
   baseURL: baseURL as string,
   headers: {
