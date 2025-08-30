@@ -177,8 +177,8 @@ const myStores = computed(() => userSettingStore.stores);
 const deletestoreName = (name: string) => userSettingStore.deleteStore(name);
 const onRegisterStore = () => {
   userSettingStore.addStore(storeName.value, storeDescription.value);
-  storeName.value = '';
-  storeDescription.value = '';
+  // storeName.value = '';
+  // storeDescription.value = '';
 };
 const onSaveAccount = () => {
   userSettingStore.setClientId(clientId.value);
