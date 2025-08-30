@@ -6,7 +6,7 @@
 
         <q-toolbar-title @click="$router.push('/')" style="cursor: pointer">
           {{ $t('Rank One') }}
-          <q-badge class="q-ml-none" color="teal" align="top">v1.8</q-badge>
+          <q-badge class="q-ml-none" color="teal" align="top">v1.9</q-badge>
         </q-toolbar-title>
 
         <!-- <span class="text-bold text-body1 text-grey-4">
@@ -45,7 +45,7 @@ import { ref, onMounted, onBeforeMount } from 'vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import { useI18n } from 'vue-i18n';
 import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
-//import { useuserSettingStore } from 'src/stores/user-account';
+
 import { useUserSettingStore } from 'src/stores/user-setting';
 import { useScreenUtil } from 'src/composables/useScreenUtil';
 
@@ -80,7 +80,7 @@ function toggleLeftDrawer() {
 onMounted(() => {
   //userSettingStore.load();
   const language = localStorage.getItem('userLanguage');
-  locale.value = language ?? 'en-US';
+  locale.value = language ?? 'ko-KR'; // locale.value = language ?? 'en-US';
 });
 
 onBeforeMount(() => {

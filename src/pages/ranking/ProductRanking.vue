@@ -145,7 +145,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { apiNaver } from 'src/boot/axios';
 import type { QTableColumn } from 'quasar';
-//import { useuserSettingStore } from 'src/stores/user-account';
+
 import { useUserSettingStore } from 'src/stores/user-setting';
 import { useScreenUtil } from 'src/composables/useScreenUtil';
 
@@ -242,8 +242,10 @@ const columns = computed(() => {
   return cols;
 });
 
-function addSearchKeyOption(val: string, done: (val: string) => void) {
+//function addSearchKeyOption(val: string, done: (val: string) => void) {
+const addSearchKeyOption = async (val: string, done: (val: string) => void) => {
   val = val.trim();
+  console.log('val=', val);
   if (val.length > 0) {
     const found = searchOptions.value.find((item: string) => item === val);
     if (!found) {
@@ -251,9 +253,10 @@ function addSearchKeyOption(val: string, done: (val: string) => void) {
       searchOptions.value.unshift(val);
       userSettingStore.setSearchKeyList(searchOptions.value);
     }
+    await onSearch();
   }
   done(val);
-}
+};
 const setModel = (val: string) => (searchKey.value = val);
 function filterFn(val: string, update: (cb: () => void) => void) {
   update(() => {
@@ -318,7 +321,7 @@ const onSearch = async () => {
       },
     });
 
-    console.log(' response.data=', response.data);
+    //console.log(' response.data=', response.data);
     if ('items' in response.data) {
       productItems.value = response.data.items.map((d: RankItem, index: number) => {
         if (d.mallName === selectedStore.value)

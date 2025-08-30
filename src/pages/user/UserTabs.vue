@@ -166,7 +166,6 @@ const storeName = ref('');
 const storeDescription = ref('');
 import draggable from 'vuedraggable';
 import type { SortableEvent } from 'sortablejs';
-//import { useuserSettingStore } from 'src/stores/user-account';
 import { useUserSettingStore } from 'src/stores/user-setting';
 import { useRouter } from 'vue-router';
 const router = useRouter();
