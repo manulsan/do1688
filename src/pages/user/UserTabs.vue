@@ -117,9 +117,9 @@
             :label="$t('Store Name')"
             dense
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('Please enter store name')]"
             style="width: 300px"
           >
+            <!-- :rules="[(val) => (val && val.length > 0) || $t('Please enter store name')]" -->
           </q-input>
           <q-input
             v-model="storeDescription"
