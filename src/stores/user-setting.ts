@@ -44,8 +44,8 @@ export const useUserSettingStore = defineStore('user-setting', {
     },
 
     addStore(name: string, description: string) {
-      console.log(name, description);
-      console.log('this.client.stores = ', this.client.stores);
+      // console.log(name, description);
+      // console.log('this.client.stores = ', this.client.stores);
       this.client.stores.push({
         name: name,
         description: description,
