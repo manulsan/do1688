@@ -111,6 +111,7 @@
         <!------- **** store  tab **** ------->
         <q-form @submit="onRegisterStore" class="q-mx-lg" dense>
           <q-separator class="q-my-md" />
+
           <q-input
             v-model="storeName"
             :label="$t('Store Name')"
@@ -126,8 +127,8 @@
             :label="$t('Description')"
             style="width: 300px"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('Please enter store description')]"
           />
+          <!-- :rules="[(val) => (val && val.length > 0) || $t('Please enter store description')]" -->
           <q-btn
             :label="$t('Add Store')"
             icon="add"
