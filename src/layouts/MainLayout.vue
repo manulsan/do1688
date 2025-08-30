@@ -50,7 +50,7 @@ import { useUserSettingStore } from 'src/stores/user-setting';
 import { useScreenUtil } from 'src/composables/useScreenUtil';
 
 const { isMobile } = useScreenUtil();
-console.log('isMobile=', isMobile);
+console.log('isMobile=', isMobile.value);
 const leftDrawerOpen = ref(false);
 // const userName = ref('none');
 const userSettingStore = useUserSettingStore();

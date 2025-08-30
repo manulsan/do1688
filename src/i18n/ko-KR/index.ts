@@ -42,7 +42,8 @@ export default {
   'Please enter your email': '이메일을 입력해주세요',
   Hint: '힌트',
   'Hint for Client ID': '클라이언트 아이디 생성 힌트',
-  'If you need client ID, click below link': '네이버 클라이언트 아이디 생성은 링크를 참조하세요',
+  'If you need client ID, click below link':
+    '스토어 연동을 위한 네이버 클라이언트 아이디 생성은 링크를 참조하세요',
   'DAOL Help Center': 'DAOL 고객 센터',
   'CAFE24 Help Center': 'CAFE24 고객 센터',
   'User Information is not set': '사용자 정보가 설정이 없습니다, 설정 페이지로 이동합니다.!!!',
