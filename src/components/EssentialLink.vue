@@ -23,12 +23,12 @@
 
 <script setup lang="ts">
 export interface EssentialLinkProps {
-  title: string;
+  title?: string;
   caption?: string;
   link?: string;
   to?: string;
   icon?: string;
-  seperator: boolean;
+  seperator?: boolean;
 }
 
 const props = withDefaults(defineProps<EssentialLinkProps>(), {

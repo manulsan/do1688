@@ -23,12 +23,11 @@
         <!-- <q-item-label header>{{ $t('Menus') }} </q-item-label> -->
 
         <template v-for="(menu, index) in menuItems" :key="index">
-          <EssentialLink v-if="!menu.seperator" v-bind="menu" />
-          <q-separator v-else />
+          <q-separator v-if="menu.seperator" />
+          <EssentialLink v-else v-bind="menu" />
         </template>
 
         <div class="q-pa-md absolute-bottom">
-          <!-- <DarkmodeSWitcher /> -->
           <LanguageSwitcher />
         </div>
       </q-list>
@@ -62,14 +61,21 @@ const menuItems: EssentialLinkProps[] = [
     caption: 'product ranking check',
     icon: 'favorite',
     to: '/ranking',
-    seperator: false,
+  },
+  // {
+  //   title: 'image translation',
+  //   caption: 'setup User Settings',
+  //   icon: 'settings',
+  //   to: '/image-translation',
+  // },
+  {
+    seperator: true,
   },
   {
     title: 'setup',
     caption: 'setup User Settings',
     icon: 'settings',
     to: '/user',
-    seperator: false,
   },
 ];
 

@@ -47,4 +47,5 @@ export default {
   'User Information is not set': 'User Information is not set, Moving to User Page',
   'User Store is not set': 'User Store is not set, Moving to User Page',
   'Nick Name': 'Nick Name',
+  'image translation': 'Image Translation',
 };
