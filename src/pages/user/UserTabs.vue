@@ -194,17 +194,17 @@ const tooltipAddStore = computed(() => {
 });
 const isStoreInputsValid = () => {
   try {
-    // if (storeName.value.length > 0) {
-    //   if (!myStores.value) return true;
-    //   else if (myStores.value.length !== 0) return true;
-    //   else {
-    //     const dup = myStores.value.find((d) => d.name === storeName.value);
-    //     return dup === undefined;
-    //   }
-    // }
-    //return false;
-
-    return true;
+    if (storeName.value.length > 0) {
+      return true;
+      // alex notes: do net check below, in production make exception
+      // if (!myStores.value) return true;
+      // else if (myStores.value.length !== 0) return true;
+      // else {
+      //   const dup = myStores.value.find((d) => d.name === storeName.value);
+      //   return dup === undefined;
+      // }
+    }
+    return false;
   } catch (error) {
     console.error(error);
   }
