@@ -137,7 +137,7 @@
             type="submit"
             :disable="!isStoreInputsValid()"
           >
-            <!-- <q-tooltip>{{ $t(tooltipAddStore) }}</q-tooltip> -->
+            <q-tooltip>{{ $t(tooltipAddStore) }}</q-tooltip>
           </q-btn>
         </q-form>
       </q-tab-panel>
@@ -187,18 +187,20 @@ const onSaveAccount = () => {
   userSettingStore.setUserName(userName.value);
   userSettingStore.setUserEmail(userEmail.value);
 };
-// const tooltipAddStore = computed(() => {
-//   if (!storeName.value) return 'Please enter store name';
-//   else if (!storeDescription.value) return 'Please enter store description';
-//   else return 'Add Store';
-// });
+const tooltipAddStore = computed(() => {
+  if (!storeName.value) return 'Please enter store name';
+  else if (!storeDescription.value) return 'Please enter store description';
+  else return 'Add Store';
+});
 const isStoreInputsValid = () => {
-  // if (storeName.value.length > 0) {
-  //   const dup = myStores.value.find((d) => d.name === storeName.value);
-  //   return dup === undefined;
-  // }
-  // return false;
-  return true;
+  if (storeName.value.length > 0) {
+    if (myStores.value.length !== 0) return true;
+    else {
+      const dup = myStores.value.find((d) => d.name === storeName.value);
+      return dup === undefined;
+    }
+  }
+  return false;
 };
 
 function onDragEnd(evt: SortableEvent) {
