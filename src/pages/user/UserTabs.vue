@@ -81,6 +81,8 @@
       </q-tab-panel>
 
       <q-tab-panel name="store_setting">
+        {{ 'myStores: ' + myStores }}
+        {{ 'myStores: ' + JSON.stringify(myStores) }}
         <draggable
           v-model="myStores"
           item-key="name"
