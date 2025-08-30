@@ -193,14 +193,19 @@ const tooltipAddStore = computed(() => {
   else return 'Add Store';
 });
 const isStoreInputsValid = () => {
-  if (storeName.value.length > 0) {
-    if (myStores.value.length !== 0) return true;
-    else {
-      const dup = myStores.value.find((d) => d.name === storeName.value);
-      return dup === undefined;
+  try {
+    if (storeName.value.length > 0) {
+      if (!myStores.value) return true;
+      else if (myStores.value.length !== 0) return true;
+      else {
+        const dup = myStores.value.find((d) => d.name === storeName.value);
+        return dup === undefined;
+      }
     }
+    return false;
+  } catch (error) {
+    console.error(error);
   }
-  return false;
 };
 
 function onDragEnd(evt: SortableEvent) {
