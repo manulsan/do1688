@@ -202,7 +202,9 @@ const isStoreInputsValid = () => {
     //     return dup === undefined;
     //   }
     // }
-    return false;
+    //return false;
+
+    return true;
   } catch (error) {
     console.error(error);
   }
