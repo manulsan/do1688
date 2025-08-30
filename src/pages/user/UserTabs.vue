@@ -193,11 +193,12 @@ const onSaveAccount = () => {
 //   else return 'Add Store';
 // });
 const isStoreInputsValid = () => {
-  if (storeName.value.length > 0) {
-    const dup = myStores.value.find((d) => d.name === storeName.value);
-    return dup === undefined;
-  }
-  return false;
+  // if (storeName.value.length > 0) {
+  //   const dup = myStores.value.find((d) => d.name === storeName.value);
+  //   return dup === undefined;
+  // }
+  // return false;
+  return true;
 };
 
 function onDragEnd(evt: SortableEvent) {
