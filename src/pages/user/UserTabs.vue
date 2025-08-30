@@ -137,7 +137,7 @@
             type="submit"
             :disable="!isStoreInputsValid()"
           >
-            <q-tooltip>{{ $t(tooltipAddStore) }}</q-tooltip>
+            <!-- <q-tooltip>{{ $t(tooltipAddStore) }}</q-tooltip> -->
           </q-btn>
         </q-form>
       </q-tab-panel>
