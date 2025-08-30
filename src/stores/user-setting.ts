@@ -45,6 +45,7 @@ export const useUserSettingStore = defineStore('user-setting', {
 
     addStore(name: string, description: string) {
       console.log(name, description);
+      console.log('this.client.stores = ', this.client.stores);
       this.client.stores.push({
         name: name,
         description: description,
@@ -80,8 +81,10 @@ export const useUserSettingStore = defineStore('user-setting', {
 
     load() {
       const client = localStorage.getItem('client');
-      if (client) this.client = JSON.parse(client);
-      console.log('load this.client=', this.client);
+      if (client) {
+        this.client = JSON.parse(client);
+        if (!this.client.stores) this.client.stores = [];
+      }
 
       const user = localStorage.getItem('user');
       if (user) this.user = JSON.parse(user);
